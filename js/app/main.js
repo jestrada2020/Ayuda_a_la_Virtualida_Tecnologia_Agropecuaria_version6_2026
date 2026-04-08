@@ -395,7 +395,13 @@ function bf() {
       const parts = texto.split(/\[(\d+)\/(\d+)\]/);
       return parts.reduce((acc, p, i) => {
         if (i % 3 === 0) { if (p) acc.push(v.jsx("span", { children: p }, "t" + i)); }
-        else if (i % 3 === 1) { acc.push(fracFn(parseInt(p), parseInt(parts[i+1]), "", true)); }
+        else if (i % 3 === 1) {
+          const num = parts[i], den = parts[i + 1];
+          acc.push(v.jsx("span", {
+            style: { display: "inline", background: "rgba(251,191,36,0.25)", border: "1px solid rgba(251,191,36,0.6)", borderRadius: "0.3rem", padding: "1px 5px", fontWeight: "bold", fontFamily: "monospace", fontSize: "0.95em", color: "#fde68a", whiteSpace: "nowrap", verticalAlign: "baseline" },
+            children: `${num}/${den}`,
+          }, "f" + i));
+        }
         return acc;
       }, []);
     },
@@ -1013,7 +1019,23 @@ function bf() {
               className: "text-2xl font-bold mb-6",
               children: "Sumas Verticales",
             }),
-            ytCard("gdZsyRJo7sI", "▶ Sumas Verticales — Ver en YouTube"),
+            v.jsx("div", {
+              style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" },
+              children: [
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Sumas Verticales" }),
+                    ytCard("gdZsyRJo7sI", "▶ Sumas Verticales — Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Suma y Resta de Fracciones" }),
+                    ytCard("UVb0xbN2ySc", "▶ Suma y Resta de Fracciones — Ver en YouTube"),
+                  ],
+                }),
+              ],
+            }),
             v.jsx("div", {
               className: "grid grid-cols-2 md:grid-cols-4 gap-4",
               children: xr
@@ -1425,7 +1447,23 @@ function bf() {
           className: "max-w-4xl mx-auto p-6",
           children: [
             v.jsx("h2", { className: "text-2xl font-bold mb-6", children: "Fracciones" }),
-            ytCard("0ghKPQplRaE", "▶ Fracciones — Ver en YouTube"),
+            v.jsx("div", {
+              style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" },
+              children: [
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Fracciones" }),
+                    ytCard("0ghKPQplRaE", "▶ Fracciones — Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Fracciones Mixtas" }),
+                    ytCard("lmHpxDThezI", "▶ Fracciones Mixtas — Ver en YouTube"),
+                  ],
+                }),
+              ],
+            }),
             v.jsx("div", {
               className: "grid grid-cols-2 md:grid-cols-3 gap-4",
               children: xr.filter((f) => f.type === "fraccion" || f.type === "fracmixta" || f.type === "fracpotmix").map((f) =>
@@ -2028,6 +2066,7 @@ function bf() {
               className: "text-2xl font-bold mb-6",
               children: "Expresiones",
             }),
+            ytCard("AwS2nmRv-U4", "▶ Expresiones Algebraicas — Ver en YouTube"),
             v.jsx("div", {
               className: "grid grid-cols-2 md:grid-cols-4 gap-4",
               children: xr
@@ -2061,6 +2100,35 @@ function bf() {
             v.jsx("h2", {
               className: "text-2xl font-bold mb-6",
               children: "Problemas",
+            }),
+            v.jsx("div", {
+              style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" },
+              children: [
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Video 1" }),
+                    ytCard("u8F-ZnBaXhA", "▶ Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Video 2" }),
+                    ytCard("C01tANWnSNU", "▶ Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Video 3" }),
+                    ytCard("11bNyZW9tlY", "▶ Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Video 4" }),
+                    ytCard("SlDNOnmV7q8", "▶ Ver en YouTube"),
+                  ],
+                }),
+              ],
             }),
             v.jsx("div", {
               className: "grid grid-cols-2 gap-4",
@@ -3528,7 +3596,7 @@ function bf() {
                   className: "bg-yellow-600/20 border border-yellow-500 p-4 rounded-xl mb-6",
                   children: [
                     v.jsx("div", { className: "text-sm text-yellow-200 mb-2", children: "PROBLEMA:" }),
-                    v.jsx("div", { className: "text-lg flex flex-wrap items-center gap-1", children: rfrac(Ce.texto) }),
+                    v.jsx("div", { className: "text-lg leading-relaxed", children: rfrac(Ce.texto) }),
                   ],
                 }),
                 v.jsx("div", { className: "text-center text-white/60 mb-3", children: "Escribe la respuesta como fracción:" }),
