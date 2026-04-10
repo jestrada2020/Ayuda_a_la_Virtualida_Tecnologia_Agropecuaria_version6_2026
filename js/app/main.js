@@ -761,6 +761,21 @@ function bf() {
                   ],
                 }),
                 v.jsx("button", {
+                  onClick: () => P("videos_modulos"),
+                  style: {
+                    padding: "0.4rem 0.9rem",
+                    background: C === "videos_modulos" ? "rgba(251,191,36,0.35)" : "rgba(251,191,36,0.18)",
+                    border: "1px solid rgba(251,191,36,0.5)",
+                    borderRadius: "0.6rem",
+                    color: "#fbbf24",
+                    fontWeight: "bold",
+                    fontSize: "0.85rem",
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                  },
+                  children: "🎬 Videos por Módulo",
+                }),
+                v.jsx("button", {
                   onClick: () => be(true),
                   className: "p-2 bg-white/10 rounded-lg",
                   children: v.jsx(window._icons.Yf, { className: "w-5 h-5" }),
@@ -4255,6 +4270,56 @@ function bf() {
                       ],
                     }),
               ],
+            }),
+          ],
+        }),
+      C === "videos_modulos" &&
+        v.jsxs("main", {
+          className: "max-w-4xl mx-auto p-6",
+          children: [
+            v.jsx("h2", { className: "text-2xl font-bold mb-6", children: "Videos por Módulo" }),
+            v.jsx("div", {
+              style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" },
+              children: [
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "MODULO UNO" }),
+                    ytCard("GwkOku6-wK4", "▶ MODULO UNO — Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "MODULO DOS" }),
+                    ytCard("S9aFBc4mZts", "▶ MODULO DOS — Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "MODULO TRES" }),
+                    ytCard("jzHb8EC6ztk", "▶ MODULO TRES — Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "MODULO CUARTO" }),
+                    ytCard("M_dPUEl8xy0", "▶ MODULO CUARTO — Ver en YouTube"),
+                  ],
+                }),
+              ],
+            }),
+            v.jsx("div", {
+              style: { maxWidth: "50%", margin: "0 auto" },
+              children: v.jsxs("div", {
+                children: [
+                  v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "MODULO CINCO" }),
+                  ytCard("FAVEFS31OhQ", "▶ MODULO CINCO — Ver en YouTube"),
+                ],
+              }),
+            }),
+            v.jsx("button", {
+              onClick: () => P("home"),
+              className: "mt-6 text-blue-300",
+              children: "Volver",
             }),
           ],
         }),
