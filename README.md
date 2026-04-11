@@ -1,2 +1,2 @@
-# NuevaVersionTecnologiaAgropecuaria_U_version3
-Aplicación para el acompañamiento y mejoramiento académico en estudiantes de la tecnología Agropecuaria
+# Nueva Versión Tecnología Agropecuaria version 3
+Aplicación con propósito de el acompañamiento y mejoramiento académico para estudiantes de la tecnología Agropecuaria.

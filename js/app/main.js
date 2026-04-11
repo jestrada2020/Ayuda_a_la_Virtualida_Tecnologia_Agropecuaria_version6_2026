@@ -776,6 +776,21 @@ function bf() {
                   children: "🎬 Videos por Módulo",
                 }),
                 v.jsx("button", {
+                  onClick: () => P("evaluaciones_modulos"),
+                  style: {
+                    padding: "0.4rem 0.9rem",
+                    background: C === "evaluaciones_modulos" ? "rgba(99,202,183,0.35)" : "rgba(99,202,183,0.18)",
+                    border: "1px solid rgba(99,202,183,0.5)",
+                    borderRadius: "0.6rem",
+                    color: "#63cab7",
+                    fontWeight: "bold",
+                    fontSize: "0.85rem",
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                  },
+                  children: "📝 Evaluaciones_Módulos",
+                }),
+                v.jsx("button", {
                   onClick: () => be(true),
                   className: "p-2 bg-white/10 rounded-lg",
                   children: v.jsx(window._icons.Yf, { className: "w-5 h-5" }),
@@ -4320,6 +4335,116 @@ function bf() {
               onClick: () => P("home"),
               className: "mt-6 text-blue-300",
               children: "Volver",
+            }),
+          ],
+        }),
+      C === "evaluaciones_modulos" &&
+        v.jsxs("main", {
+          className: "max-w-4xl mx-auto p-6",
+          children: [
+            v.jsx("h2", {
+              style: { fontSize: "1.5rem", fontWeight: "bold", marginBottom: "0.4rem", color: "#63cab7" },
+              children: "📝 Evaluaciones por Módulo",
+            }),
+            v.jsx("p", {
+              style: { fontSize: "0.9rem", color: "#94a3b8", marginBottom: "1.5rem" },
+              children: "Selecciona el módulo para acceder a su evaluación en línea.",
+            }),
+            v.jsx("div", {
+              style: {
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "1.2rem",
+                marginBottom: "2rem",
+              },
+              children: [
+                { label: "Módulo Uno", url: "https://jestrada2020.github.io/Evaluacion_moduloUno_2026/", num: "01" },
+                { label: "Módulo Dos", url: "https://jestrada2020.github.io/Evaluacion_ModuloDos_2026/", num: "02" },
+                { label: "Módulo Tres", url: "https://jestrada2020.github.io/Evaluacion_ModuloTres_2026/", num: "03" },
+                { label: "Módulo Cuatro", url: "https://jestrada2020.github.io/Evaluacion_ModuloCuatro_2026/", num: "04" },
+                { label: "Módulo Cinco", url: "https://jestrada2020.github.io/Evaluacion_ModoloCinco_2026/", num: "05" },
+                { label: "Módulo Seis", url: "https://jestrada2020.github.io/Evaluacion_ModuloSeis_2026/", num: "06" },
+                { label: "Módulo Siete", url: "https://jestrada2020.github.io/Evaluacion_ModuloSiete_2026/", num: "07" },
+              ].map((m) =>
+                v.jsx("a", {
+                  href: m.url,
+                  target: "_blank",
+                  rel: "noopener noreferrer",
+                  style: {
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "1rem",
+                    background: "linear-gradient(135deg, rgba(99,202,183,0.15) 0%, rgba(15,45,31,0.6) 100%)",
+                    border: "1px solid rgba(99,202,183,0.35)",
+                    borderRadius: "1rem",
+                    padding: "1.1rem 1.3rem",
+                    textDecoration: "none",
+                    cursor: "pointer",
+                    transition: "transform 0.15s, box-shadow 0.15s",
+                    boxShadow: "0 2px 12px rgba(0,0,0,0.3)",
+                  },
+                  onMouseEnter: (e) => {
+                    e.currentTarget.style.transform = "translateY(-3px)";
+                    e.currentTarget.style.boxShadow = "0 8px 24px rgba(99,202,183,0.25)";
+                    e.currentTarget.style.borderColor = "rgba(99,202,183,0.7)";
+                  },
+                  onMouseLeave: (e) => {
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.boxShadow = "0 2px 12px rgba(0,0,0,0.3)";
+                    e.currentTarget.style.borderColor = "rgba(99,202,183,0.35)";
+                  },
+                  children: [
+                    v.jsx("div", {
+                      style: {
+                        minWidth: "52px",
+                        height: "52px",
+                        borderRadius: "0.75rem",
+                        background: "rgba(99,202,183,0.25)",
+                        border: "2px solid rgba(99,202,183,0.5)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "1.3rem",
+                        fontWeight: "bold",
+                        color: "#63cab7",
+                        flexShrink: 0,
+                      },
+                      children: m.num,
+                    }),
+                    v.jsxs("div", {
+                      style: { flex: 1 },
+                      children: [
+                        v.jsx("div", {
+                          style: { fontSize: "0.75rem", color: "#63cab7", fontWeight: "bold", marginBottom: "0.2rem", letterSpacing: "0.05em" },
+                          children: "EVALUACIÓN",
+                        }),
+                        v.jsx("div", {
+                          style: { fontSize: "1rem", fontWeight: "bold", color: "#e2f5eb" },
+                          children: m.label,
+                        }),
+                        v.jsx("div", {
+                          style: { fontSize: "0.75rem", color: "#94a3b8", marginTop: "0.2rem" },
+                          children: "Abrir evaluación →",
+                        }),
+                      ],
+                    }),
+                  ],
+                }, m.num)
+              ),
+            }),
+            v.jsx("button", {
+              onClick: () => P("home"),
+              style: {
+                marginTop: "0.5rem",
+                padding: "0.4rem 1rem",
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.2)",
+                borderRadius: "0.5rem",
+                color: "#93c5fd",
+                cursor: "pointer",
+                fontSize: "0.9rem",
+              },
+              children: "← Volver",
             }),
           ],
         }),
