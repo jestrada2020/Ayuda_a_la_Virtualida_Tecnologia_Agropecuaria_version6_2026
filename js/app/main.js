@@ -1054,14 +1054,14 @@ function bf() {
               children: [
                 v.jsxs("div", {
                   children: [
-                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Sumas Verticales" }),
-                    ytCard("gdZsyRJo7sI", "▶ Sumas Verticales — Ver en YouTube"),
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Suma de números sin decimales" }),
+                    ytCard("679tKktW4G4", "▶ Suma sin decimales — Ver en YouTube"),
                   ],
                 }),
                 v.jsxs("div", {
                   children: [
-                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Suma y Resta de Fracciones" }),
-                    ytCard("UVb0xbN2ySc", "▶ Suma y Resta de Fracciones — Ver en YouTube"),
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Suma de números con decimales" }),
+                    ytCard("0Pq9WjZ3E48", "▶ Suma con decimales — Ver en YouTube"),
                   ],
                 }),
               ],
