@@ -4323,11 +4323,28 @@ function bf() {
               ],
             }),
             v.jsx("div", {
+              style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" },
+              children: [
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "MODULO CINCO" }),
+                    ytCard("FAVEFS31OhQ", "▶ MODULO CINCO — Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "MODULO SEIS" }),
+                    ytCard("dm7CIPXkjcE", "▶ MODULO SEIS — Ver en YouTube"),
+                  ],
+                }),
+              ],
+            }),
+            v.jsx("div", {
               style: { maxWidth: "50%", margin: "0 auto" },
               children: v.jsxs("div", {
                 children: [
-                  v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "MODULO CINCO" }),
-                  ytCard("FAVEFS31OhQ", "▶ MODULO CINCO — Ver en YouTube"),
+                  v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "MODULO SIETE" }),
+                  ytCard("vSUPGoafIWI", "▶ MODULO SIETE — Ver en YouTube"),
                 ],
               }),
             }),
