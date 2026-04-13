@@ -2282,7 +2282,23 @@ function bf() {
           className: "max-w-4xl mx-auto p-6",
           children: [
             v.jsx("h2", { className: "text-2xl font-bold mb-6", children: "Divisiones" }),
-            ytCard("MhuDuTe8bZ0", "▶ Divisiones — Ver en YouTube"),
+            v.jsx("div", {
+              style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" },
+              children: [
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Divisiones" }),
+                    ytCard("MhuDuTe8bZ0", "▶ Divisiones — Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "División por una Cifra" }),
+                    ytCard("mTrLfZ9e028", "▶ División por una Cifra — Ver en YouTube"),
+                  ],
+                }),
+              ],
+            }),
             v.jsx("div", {
               className: "grid grid-cols-2 md:grid-cols-3 gap-4",
               children: xr
@@ -2350,7 +2366,7 @@ function bf() {
       C === "divg" &&
         E &&
         v.jsxs("main", {
-          className: "max-w-2xl mx-auto p-6",
+          className: "max-w-4xl mx-auto p-6",
           children: [
             v.jsx("button", {
               onClick: () => P(E.isRemainder ? "divrs" : E.isDecimal ? "divds" : "divs"),
@@ -2358,6 +2374,10 @@ function bf() {
               children: "Salir",
             }),
             v.jsxs("div", {
+              style: { display: "flex", gap: "1rem", alignItems: "flex-start" },
+              children: [
+            v.jsxs("div", {
+              style: { flex: 1 },
               className: "bg-white/10 p-8 rounded-2xl",
               children: [
                 v.jsxs("h3", {
@@ -2481,7 +2501,7 @@ function bf() {
                             : ["Dígito ", I + 1, " de ", E.QLen, " del cociente"],
                         }),
                         v.jsx("div", {
-                          className: "grid grid-cols-5 gap-2 max-w-xs mx-auto mb-4",
+                          className: "grid grid-cols-5 gap-2 max-w-xs mx-auto mb-2",
                           children: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((f) =>
                             v.jsx("button", {
                               onClick: () => hd(String(f)),
@@ -2489,6 +2509,22 @@ function bf() {
                               children: f,
                             }, f),
                           ),
+                        }),
+                        v.jsx("button", {
+                          onClick: () => {
+                            if (!E) return;
+                            const y = [...q];
+                            if (y[I] !== undefined && y[I] !== "") {
+                              y[I] = "";
+                              Z(y);
+                            } else if (I > 0) {
+                              y[I - 1] = "";
+                              Z(y);
+                              J(I - 1);
+                            }
+                          },
+                          className: "w-full bg-red-700 hover:bg-red-600 py-3 rounded-xl text-xl font-bold mb-4 max-w-xs mx-auto block",
+                          children: "⌫ Borrar",
                         }),
                         v.jsxs("div", {
                           className: "flex gap-3 max-w-xs mx-auto",
@@ -2507,6 +2543,39 @@ function bf() {
                         }),
                       ],
                     }),
+              ],
+            }),
+            v.jsxs("div", {
+              style: { minWidth: "175px" },
+              className: "bg-white/10 p-4 rounded-2xl",
+              children: [
+                v.jsx("div", {
+                  style: { textAlign: "center", fontWeight: "bold", fontSize: "0.85rem", color: "#fde68a", marginBottom: "0.75rem" },
+                  children: "Tabla del " + E.divisor,
+                }),
+                ...[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => {
+                  const esCorrecta = I >= 0 && n === E.dQuotient[I];
+                  return v.jsxs("div", {
+                    style: {
+                      display: "flex", justifyContent: "space-between", alignItems: "center",
+                      padding: "4px 8px", borderRadius: "6px",
+                      fontFamily: "monospace", fontSize: "0.95rem",
+                      background: esCorrecta ? "rgba(234,179,8,0.25)" : "transparent",
+                      color: esCorrecta ? "#fde68a" : "white",
+                      fontWeight: esCorrecta ? "bold" : "normal",
+                      marginBottom: "2px",
+                    },
+                    children: [
+                      v.jsx("span", { children: n + " × " + E.divisor + " =" }),
+                      v.jsx("span", {
+                        style: { fontWeight: "bold", color: esCorrecta ? "#86efac" : "#93c5fd", marginLeft: "8px" },
+                        children: n * E.divisor,
+                      }),
+                    ],
+                  }, n);
+                }),
+              ],
+            }),
               ],
             }),
           ],
@@ -3766,7 +3835,29 @@ function bf() {
           children: [
             v.jsx("h2", { className: "text-2xl font-bold mb-1", children: "Regla de Tres Directa" }),
             v.jsx("p", { className: "text-cyan-200 text-sm mb-5", children: "Resuelve proporciones directas aplicadas al sector agropecuario. A mayor cantidad → mayor resultado." }),
-            ytCard("QOO3NczV_dg", "▶ Regla de Tres Directa — Ver en YouTube"),
+            v.jsx("div", {
+              style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" },
+              children: [
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Regla de Tres Directa" }),
+                    ytCard("QOO3NczV_dg", "▶ Regla de Tres Directa — Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Despeje de Variable — Parte 1" }),
+                    ytCard("ZorbD4FDix8", "▶ Despeje de Variable PARTE UNO — Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Despeje de Variable — Parte 2" }),
+                    ytCard("YnwrGKNJKX0", "▶ Despeje de Variable PARTE DOS — Ver en YouTube"),
+                  ],
+                }),
+              ],
+            }),
             v.jsx("div", {
               className: "grid grid-cols-2 md:grid-cols-3 gap-4 mb-6",
               children: xr.filter((f) => f.type === "r3directa").map((f) =>
