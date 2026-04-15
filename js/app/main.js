@@ -989,6 +989,30 @@ function bf() {
                 v.jsx("div", { className: "font-bold", children: "Factorizar" }),
               ],
             }),
+            v.jsxs("button", {
+              onClick: () => P("geometria_cat"),
+              className: "bg-emerald-700 p-6 rounded-2xl hover:bg-emerald-600",
+              children: [
+                v.jsx("div", { className: "text-3xl mb-2 font-bold font-mono", children: "△" }),
+                v.jsx("div", { className: "font-bold", children: "Conceptos Geométricos" }),
+              ],
+            }),
+            v.jsxs("button", {
+              onClick: () => P("despeje_cat"),
+              className: "bg-rose-800 p-6 rounded-2xl hover:bg-rose-700",
+              children: [
+                v.jsx("div", { className: "text-3xl mb-2 font-bold font-mono", children: "x = ?" }),
+                v.jsx("div", { className: "font-bold", children: "Despeje de Variables" }),
+              ],
+            }),
+            v.jsxs("button", {
+              onClick: () => P("razonamiento_cat"),
+              className: "bg-indigo-700 p-6 rounded-2xl hover:bg-indigo-600",
+              children: [
+                v.jsx("div", { className: "text-3xl mb-2 font-bold font-mono", children: "🧩" }),
+                v.jsx("div", { className: "font-bold", children: "Razonamiento Deductivo" }),
+              ],
+            }),
             v.jsxs("div", {
               className: "bg-white/10 rounded-2xl p-6",
               children: [
@@ -4377,6 +4401,84 @@ function bf() {
                     }),
               ],
             }),
+          ],
+        }),
+      // ── Categoría Conceptos Geométricos ─────────────────────────────────────
+      C === "geometria_cat" &&
+        v.jsxs("main", {
+          className: "max-w-4xl mx-auto p-6",
+          children: [
+            v.jsx("h2", { className: "text-2xl font-bold mb-6", children: "Conceptos Geométricos" }),
+            v.jsx("div", {
+              style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" },
+              children: [
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Conceptos Geométricos claves en la técnica de G Polya" }),
+                    ytCard("WadkpkbyfRY", "▶ Conceptos Geométricos claves en la técnica de G Polya — Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Conceptos de linea recta aplicado en diverso tipos de problemas" }),
+                    ytCard("PBb-jFGTN0I", "▶ Conceptos de linea recta aplicado en diverso tipos de problemas — Ver en YouTube"),
+                  ],
+                }),
+              ],
+            }),
+            v.jsx("button", { onClick: () => P("home"), className: "mt-2 text-blue-300", children: "Volver" }),
+          ],
+        }),
+      // ── Categoría Razonamiento Deductivo ────────────────────────────────────
+      C === "razonamiento_cat" &&
+        v.jsxs("main", {
+          className: "max-w-4xl mx-auto p-6",
+          children: [
+            v.jsx("h2", { className: "text-2xl font-bold mb-6", children: "Razonamiento Deductivo" }),
+            v.jsx("div", {
+              style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" },
+              children: [
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Problema lógico Uno - Tecnología Agropecuaria" }),
+                    ytCard("X2X7ckrTW_Y", "▶ Problema lógico Uno - Tecnología Agropecuaria — Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Problema lógico de las profesiones" }),
+                    ytCard("RSXhqPLTKgQ", "▶ Problema lógico de las profesiones — Ver en YouTube"),
+                  ],
+                }),
+              ],
+            }),
+            v.jsx("button", { onClick: () => P("home"), className: "mt-2 text-blue-300", children: "Volver" }),
+          ],
+        }),
+      // ── Categoría Despeje de Variables ──────────────────────────────────────
+      C === "despeje_cat" &&
+        v.jsxs("main", {
+          className: "max-w-4xl mx-auto p-6",
+          children: [
+            v.jsx("h2", { className: "text-2xl font-bold mb-6", children: "Despeje de Variables" }),
+            v.jsx("div", {
+              style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" },
+              children: [
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Despeje de variable PARTE UNO" }),
+                    ytCard("ZorbD4FDix8", "▶ Despeje de variable PARTE UNO — Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "Despeje de variable PARTE DOS" }),
+                    ytCard("YnwrGKNJKX0", "▶ Despeje de variable PARTE DOS — Ver en YouTube"),
+                  ],
+                }),
+              ],
+            }),
+            v.jsx("button", { onClick: () => P("home"), className: "mt-2 text-blue-300", children: "Volver" }),
           ],
         }),
       C === "videos_modulos" &&
