@@ -698,6 +698,21 @@ function bf() {
             v.jsxs("div", {
               style: { display: "flex", alignItems: "center", gap: "0.5rem" },
               children: [
+                v.jsx("button", {
+                  onClick: () => P("guias_modulos"),
+                  style: {
+                    padding: "0.4rem 0.9rem",
+                    background: C === "guias_modulos" ? "rgba(196,181,253,0.35)" : "rgba(196,181,253,0.18)",
+                    border: "1px solid rgba(196,181,253,0.5)",
+                    borderRadius: "0.6rem",
+                    color: "#c4b5fd",
+                    fontWeight: "bold",
+                    fontSize: "0.85rem",
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                  },
+                  children: "🎓 Guías por Módulo",
+                }),
                 v.jsxs("div", {
                   style: { position: "relative" },
                   children: [
@@ -4479,6 +4494,71 @@ function bf() {
               ],
             }),
             v.jsx("button", { onClick: () => P("home"), className: "mt-2 text-blue-300", children: "Volver" }),
+          ],
+        }),
+      C === "guias_modulos" &&
+        v.jsxs("main", {
+          className: "max-w-4xl mx-auto p-6",
+          children: [
+            v.jsx("h2", {
+              style: { fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1.5rem", color: "#c4b5fd" },
+              children: "🎓 Guías por Módulo",
+            }),
+            v.jsx("div", {
+              style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" },
+              children: [
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "GUÍA MÓDULO UNO" }),
+                    ytCard("Bhdu8CkkNos", "▶ Guía módulo uno — Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "GUÍA MÓDULO DOS" }),
+                    ytCard("VXP5XSKenLg", "▶ Guía módulo dos — Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "GUÍA MÓDULO TRES" }),
+                    ytCard("evfGX-bOUfg", "▶ Guía módulo tres — Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "GUÍA MÓDULO CUATRO" }),
+                    ytCard("L56y5Wu-vmY", "▶ Guía módulo cuatro — Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "GUÍA MÓDULO CINCO" }),
+                    ytCard("UhJPnROmcNA", "▶ Guía módulo cinco — Ver en YouTube"),
+                  ],
+                }),
+                v.jsxs("div", {
+                  children: [
+                    v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "GUÍA MÓDULO SEIS" }),
+                    ytCard("iQFqI9iq5OE", "▶ Guía módulo seis — Ver en YouTube"),
+                  ],
+                }),
+              ],
+            }),
+            v.jsx("div", {
+              style: { maxWidth: "50%", margin: "0 auto" },
+              children: v.jsxs("div", {
+                children: [
+                  v.jsx("div", { style: { color: "white", fontWeight: "bold", fontSize: "0.9rem", marginBottom: "0.4rem", textAlign: "center" }, children: "GUÍA MÓDULO SIETE" }),
+                  ytCard("PEd7Zcm9xio", "▶ Guía módulo siete — Ver en YouTube"),
+                ],
+              }),
+            }),
+            v.jsx("button", {
+              onClick: () => P("home"),
+              className: "mt-6 text-blue-300",
+              children: "Volver",
+            }),
           ],
         }),
       C === "videos_modulos" &&
