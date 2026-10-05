@@ -20,22 +20,23 @@ var qf = (C) => {
       O = Math.floor(Math.random() * 10) + 1,
       E = Math.floor(Math.random() * 10) + 1;
     return {
-      expr: `(${d} + ${O}) x ${E}`,
+      expr: `(${d} + ${O}) × ${E}`,
       answer: (d + O) * E,
-      steps: [`${d} + ${O} = ${d + O}`, `${d + O} x ${E} = ${(d + O) * E}`],
+      steps: [`${d} + ${O} = ${d + O}`, `${d + O} × ${E} = ${(d + O) * E}`],
     };
   }
   if (C === "corchetes") {
-    const d = Math.floor(Math.random() * 15) + 5,
-      O = Math.floor(Math.random() * 5) + 1,
-      E = Math.floor(Math.random() * 5) + 1;
+    // El minuendo supera a la suma del paréntesis: el resultado es positivo (los negativos se practican en «Signos»)
+    const O = Math.floor(Math.random() * 5) + 1,
+      E = Math.floor(Math.random() * 5) + 1,
+      d = O + E + 1 + Math.floor(Math.random() * 12);
     return {
-      expr: `[${d} - (${O} + ${E})] x 2`,
+      expr: `[${d} - (${O} + ${E})] × 2`,
       answer: (d - (O + E)) * 2,
       steps: [
         `${O} + ${E} = ${O + E}`,
         `${d} - ${O + E} = ${d - (O + E)}`,
-        `${d - (O + E)} x 2 = ${(d - (O + E)) * 2}`,
+        `${d - (O + E)} × 2 = ${(d - (O + E)) * 2}`,
       ],
     };
   }
@@ -104,7 +105,7 @@ var qf = (C) => {
   return {
     expr: `5 - (-${P})`,
     answer: 5 + P,
-    steps: ["Menos con menos = mas", `5 + ${P} = ${5 + P}`],
+    steps: [`-(-${P}) = +${P} (menos por menos da más)`, `5 + ${P} = ${5 + P}`],
   };
 };
 
@@ -373,7 +374,7 @@ var genResta = (CA, CB) => {
 // genRestaDec: resta con decimales
 // intA: dígitos enteros del minuendo, intB: dígitos enteros del sustraendo, dec: cifras decimales
 // integerA: si true, el minuendo no tiene parte decimal (ej. 15.0 - 3.7)
-var genRestaDec = (intA, intB, dec, integerA) => {
+var genRestaDec = (intA = 2, intB = 1, dec = 1, integerA = false) => {
   const scale = Math.pow(10, dec);
   const CA = intA + dec;   // total columnas de dígitos
   const minAint = Math.pow(10, intA - 1), maxAint = Math.pow(10, intA) - 1;
@@ -834,7 +835,7 @@ var genFactorizacion = (nivel) => {
     const cCoef = r1 * r2;
     if (bCoef === 0) continue; // sin término lineal
     // Representación LaTeX de la expresión
-    const bStr = bCoef > 0 ? `+${bCoef}` : `-${Math.abs(bCoef)}`;
+    const bStr = (bCoef > 0 ? "+" : "-") + (Math.abs(bCoef) === 1 ? "" : Math.abs(bCoef));
     const cStr = cCoef > 0 ? `+${cCoef}` : `-${Math.abs(cCoef)}`;
     const exprTex = `x^{2}${bStr}x${cStr}`;
     // Forma factorizada (x - r1)(x - r2), con signos explícitos
@@ -884,4 +885,507 @@ var genDivAB = (a, b) => {
     QLen: dQuotient.length, DLen: String(a).length, SLen: String(b).length,
     isDecimal: false, isRemainder: false, decimalPos: -1,
   };
+};
+
+// ── CONCEPTOS GEOMÉTRICOS: perímetros, áreas y volúmenes en contexto agropecuario ──
+// Cada plantilla elige datos enteros para que la respuesta sea exacta (en hectáreas, múltiplo de 0,25).
+var GEO_EJERCICIOS = [
+  { id: "geo_cerca", grupo: "perimetros", plantilla: "cerca", icon: "🐄", title: "Cerca de potrero" },
+  { id: "geo_hileras", grupo: "perimetros", plantilla: "hileras", icon: "〰️", title: "Cerca de varias hileras" },
+  { id: "geo_postes", grupo: "perimetros", plantilla: "postes", icon: "🪵", title: "Postes de una cerca" },
+  { id: "geo_lote", grupo: "areas", plantilla: "lote", icon: "🌽", title: "Lote rectangular" },
+  { id: "geo_triangulo", grupo: "areas", plantilla: "triangulo", icon: "📐", title: "Lote triangular" },
+  { id: "geo_hectareas", grupo: "areas", plantilla: "hectareas", icon: "🗺️", title: "Área en hectáreas" },
+  { id: "geo_semilla", grupo: "areas", plantilla: "semilla", icon: "🌱", title: "Semilla por área" },
+  { id: "geo_tanque", grupo: "volumenes", plantilla: "tanque", icon: "💧", title: "Tanque de agua" },
+  { id: "geo_bebedero", grupo: "volumenes", plantilla: "bebedero", icon: "🐮", title: "Bebedero" },
+];
+var GEO_GRUPOS = [
+  { id: "perimetros", titulo: "Perímetros", desc: "Contorno de una figura: suma de sus lados.", formula: "P = 2(l + a)" },
+  { id: "areas", titulo: "Áreas", desc: "Superficie de un terreno, en m² o en hectáreas.", formula: "A = l \\cdot a" },
+  { id: "volumenes", titulo: "Volúmenes", desc: "Capacidad de tanques y bebederos, en litros.", formula: "V = l \\cdot a \\cdot h" },
+];
+
+var genGeometria = (plantilla) => {
+  const r = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  const miles = (n) => {
+    const [ent, dec] = String(n).split(".");
+    return ent.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + (dec ? "," + dec : "");
+  };
+  const tex = (n) => {
+    const [ent, dec] = String(n).split(".");
+    return ent.replace(/\B(?=(\d{3})+(?!\d))/g, "\\,") + (dec ? "{,}" + dec : "");
+  };
+  let o;
+  switch (plantilla) {
+    case "cerca": {
+      const l = r(15, 80), a = r(8, l - 3), P = 2 * (l + a);
+      o = { grupo: "Perímetro", texto: `Un potrero rectangular mide ${l} m de largo y ${a} m de ancho. ¿Cuántos metros de alambre se necesitan para cercarlo con una sola hilera?`,
+        figura: { tipo: "rect", l, a, u: "m" }, formula: "P = 2(l + a)", pregunta: "Perímetro P", unidad: "m", respuesta: P,
+        pasos: [`P = 2(${l} + ${a})`, `P = 2 \\cdot ${l + a}`, `P = ${tex(P)}\\ \\text{m}`],
+        pista: "El perímetro suma los cuatro lados: dos largos y dos anchos.",
+        conclusion: `Se necesitan ${miles(P)} m de alambre para una hilera.` };
+      break;
+    }
+    case "hileras": {
+      const l = r(15, 60), a = r(8, l - 3), n = r(2, 5), P = 2 * (l + a), T = P * n;
+      o = { grupo: "Perímetro", texto: `Un corral rectangular mide ${l} m de largo y ${a} m de ancho. La cerca lleva ${n} hileras de alambre de púas. ¿Cuántos metros de alambre se necesitan en total?`,
+        figura: { tipo: "rect", l, a, u: "m" }, formula: "\\text{Alambre} = P \\cdot n", pregunta: "Alambre total", unidad: "m", respuesta: T,
+        pasos: [`P = 2(${l} + ${a}) = ${tex(P)}\\ \\text{m}`, `\\text{Alambre} = ${tex(P)} \\cdot ${n}`, `\\text{Alambre} = ${tex(T)}\\ \\text{m}`],
+        pista: "Primero halle el perímetro; luego multiplíquelo por el número de hileras.",
+        conclusion: `Con ${n} hileras se necesitan ${miles(T)} m de alambre.` };
+      break;
+    }
+    case "postes": {
+      const d = [2, 3, 4, 5][r(0, 3)], l = d * r(5, 16), a = d * r(3, l / d - 1), P = 2 * (l + a), N = P / d;
+      o = { grupo: "Perímetro", texto: `Se va a cercar un lote rectangular de ${l} m de largo y ${a} m de ancho, con un poste cada ${d} m alrededor de todo el lote. ¿Cuántos postes se necesitan?`,
+        figura: { tipo: "rect", l, a, u: "m" }, formula: "\\text{Postes} = \\dfrac{P}{d}", pregunta: "Número de postes", unidad: "postes", respuesta: N,
+        pasos: [`P = 2(${l} + ${a}) = ${tex(P)}\\ \\text{m}`, `\\text{Postes} = \\dfrac{${tex(P)}}{${d}}`, `\\text{Postes} = ${tex(N)}`],
+        pista: "En una cerca cerrada hay tantos postes como tramos: perímetro ÷ distancia entre postes.",
+        conclusion: `Se necesitan ${miles(N)} postes (la cerca es cerrada: el último tramo llega al primer poste).` };
+      break;
+    }
+    case "lote": {
+      const l = r(10, 60), a = r(5, Math.min(40, l - 1)), A = l * a;
+      o = { grupo: "Área", texto: `Un lote de siembra rectangular mide ${l} m de largo y ${a} m de ancho. ¿Cuál es su área en metros cuadrados?`,
+        figura: { tipo: "rect", l, a, u: "m" }, formula: "A = l \\cdot a", pregunta: "Área A", unidad: "m²", respuesta: A,
+        pasos: [`A = ${l} \\cdot ${a}`, `A = ${tex(A)}\\ \\text{m}^2`],
+        pista: "El área de un rectángulo es largo por ancho.",
+        conclusion: `El lote tiene ${miles(A)} m² para sembrar.` };
+      break;
+    }
+    case "triangulo": {
+      let b, h; do { b = r(6, 40); h = r(4, 30); } while ((b * h) % 2);
+      const A = b * h / 2;
+      o = { grupo: "Área", texto: `La esquina de un potrero tiene forma de triángulo rectángulo, con ${b} m de base y ${h} m de altura. ¿Cuál es su área?`,
+        figura: { tipo: "tri", b, h, u: "m" }, formula: "A = \\dfrac{b \\cdot h}{2}", pregunta: "Área A", unidad: "m²", respuesta: A,
+        pasos: [`A = \\dfrac{${b} \\cdot ${h}}{2}`, `A = \\dfrac{${tex(b * h)}}{2}`, `A = ${tex(A)}\\ \\text{m}^2`],
+        pista: "El triángulo es la mitad del rectángulo de base b y altura h.",
+        conclusion: `La esquina mide ${miles(A)} m².` };
+      break;
+    }
+    case "hectareas": {
+      let p, q; do { p = r(1, 8); q = r(1, 6); } while ((p * q) % 4 === 0 && Math.random() < 0.6);
+      const l = 50 * Math.max(p, q), a = 50 * Math.min(p, q), A = l * a, ha = A / 10000;
+      o = { grupo: "Área", texto: `Una parcela rectangular mide ${l} m de largo y ${a} m de ancho. ¿Cuántas hectáreas tiene? (1 ha = 10.000 m²)`,
+        figura: { tipo: "rect", l, a, u: "m" }, formula: "\\text{ha} = \\dfrac{l \\cdot a}{10\\,000}", pregunta: "Área en hectáreas", unidad: "ha", respuesta: ha, decimales: true,
+        pasos: [`A = ${l} \\cdot ${a} = ${tex(A)}\\ \\text{m}^2`, `\\text{ha} = \\dfrac{${tex(A)}}{10\\,000}`, `\\text{ha} = ${tex(ha)}`],
+        pista: "Calcule el área en m² y divida entre 10.000. Use la tecla «,» para los decimales.",
+        conclusion: `La parcela tiene ${miles(ha)} ha (${miles(A)} m²).` };
+      break;
+    }
+    case "semilla": {
+      const l = 10 * r(3, 10), a = 10 * r(1, Math.min(6, l / 10 - 1)), dosis = r(1, 5), A = l * a, kg = A / 100 * dosis;
+      o = { grupo: "Área", texto: `Se va a sembrar pasto en un lote de ${l} m × ${a} m. La recomendación es ${dosis} kg de semilla por cada 100 m². ¿Cuántos kilogramos de semilla se necesitan?`,
+        figura: { tipo: "rect", l, a, u: "m" }, formula: "\\text{kg} = \\dfrac{A}{100} \\cdot \\text{dosis}", pregunta: "Semilla", unidad: "kg", respuesta: kg,
+        pasos: [`A = ${l} \\cdot ${a} = ${tex(A)}\\ \\text{m}^2`, `\\dfrac{${tex(A)}}{100} = ${tex(A / 100)}\\ \\text{bloques de } 100\\ \\text{m}^2`, `\\text{kg} = ${tex(A / 100)} \\cdot ${dosis} = ${tex(kg)}\\ \\text{kg}`],
+        pista: "Halle el área, cuente cuántos bloques de 100 m² caben y multiplique por la dosis.",
+        conclusion: `Se necesitan ${miles(kg)} kg de semilla.` };
+      break;
+    }
+    case "tanque": {
+      const l = r(2, 5), a = r(1, l), h = r(1, 3), V = l * a * h, L = V * 1000;
+      o = { grupo: "Volumen", texto: `Un tanque de agua en forma de caja mide ${l} m de largo, ${a} m de ancho y ${h} m de alto. ¿Cuántos litros caben cuando está lleno? (1 m³ = 1.000 L)`,
+        figura: { tipo: "caja", l, a, h, u: "m" }, formula: "V = l \\cdot a \\cdot h", pregunta: "Capacidad", unidad: "L", respuesta: L,
+        pasos: [`V = ${l} \\cdot ${a} \\cdot ${h} = ${tex(V)}\\ \\text{m}^3`, `\\text{L} = ${tex(V)} \\cdot 1\\,000`, `\\text{L} = ${tex(L)}\\ \\text{L}`],
+        pista: "Multiplique largo, ancho y alto para tener m³; cada m³ son 1.000 litros.",
+        conclusion: `El tanque almacena ${miles(L)} litros.` };
+      break;
+    }
+    default: { // bebedero
+      const l = r(9, 30), a = r(2, 8), h = r(2, 6), V = l * a * h;
+      o = { grupo: "Volumen", texto: `Un bebedero para ganado tiene forma de caja de ${l} dm de largo, ${a} dm de ancho y ${h} dm de profundidad. ¿Cuántos litros de agua le caben? (1 dm³ = 1 L)`,
+        figura: { tipo: "caja", l, a, h, u: "dm" }, formula: "V = l \\cdot a \\cdot h", pregunta: "Capacidad", unidad: "L", respuesta: V,
+        pasos: [`V = ${l} \\cdot ${a} \\cdot ${h}`, `V = ${tex(V)}\\ \\text{dm}^3 = ${tex(V)}\\ \\text{L}`],
+        pista: "Multiplique las tres medidas; como están en decímetros, el resultado ya está en litros.",
+        conclusion: `Al bebedero le caben ${miles(V)} litros.` };
+    }
+  }
+  return { plantilla, decimales: false, ...o };
+};
+
+// ── DESPEJE DE VARIABLES: fórmulas del campo y de las ciencias ─────────────────
+// Cada ejercicio tiene dos pasos: (1) elegir la fórmula bien despejada entre cuatro
+// (la correcta y tres errores típicos, cada uno con su pista) y (2) calcular el valor.
+// Los datos se eligen para que la respuesta sea exacta (entera o con un decimal).
+var DESPEJE_EJERCICIOS = [
+  { id: "desp_dosis", nivel: 1, plantilla: "dosis", icon: "💉", title: "Peso por dosis", ciencia: true },
+  { id: "desp_area", nivel: 1, plantilla: "area", icon: "🌽", title: "Largo del lote", area: true },
+  { id: "desp_riego", nivel: 1, plantilla: "riego", icon: "💧", title: "Tiempo de riego", ciencia: true },
+  { id: "desp_concentracion", nivel: 1, plantilla: "concentracion", icon: "🧪", title: "Producto en la mezcla", ciencia: true },
+  { id: "desp_distancia", nivel: 1, plantilla: "distancia", icon: "🚜", title: "Tiempo del tractor", ciencia: true },
+  { id: "desp_costo", nivel: 2, plantilla: "costo", icon: "💰", title: "Animales vacunados" },
+  { id: "desp_engorde", nivel: 2, plantilla: "engorde", icon: "🐖", title: "Ganancia de peso" },
+  { id: "desp_temperatura", nivel: 2, plantilla: "temperatura", icon: "🌡️", title: "Temperatura del bovino", ciencia: true },
+  { id: "desp_cerca", nivel: 2, plantilla: "cerca", icon: "🐄", title: "Lado del potrero", area: true },
+  { id: "desp_tanque", nivel: 3, plantilla: "tanque", icon: "🛢️", title: "Altura del tanque", area: true },
+  { id: "desp_siembra", nivel: 3, plantilla: "siembra", icon: "🌱", title: "Largo del lote sembrado", area: true },
+];
+var DESPEJE_NIVELES = [
+  { nivel: 1, titulo: "Nivel 1: una operación", desc: "Se deshace una multiplicación o una división." },
+  { nivel: 2, titulo: "Nivel 2: dos operaciones", desc: "Primero se pasa lo que suma o resta; luego, lo que multiplica." },
+  { nivel: 3, titulo: "Nivel 3: varios factores", desc: "La incógnita está multiplicada por dos o más datos." },
+];
+
+var genDespeje = (plantilla) => {
+  const r = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  const elige = (xs) => xs[Math.floor(Math.random() * xs.length)];
+  const red = (x) => Math.round(x * 1000) / 1000;
+  // Número con coma decimal y punto de miles (texto) o \, de miles (LaTeX)
+  const partes = (n) => { const [e, d] = String(red(n)).split("."); return [e, d]; };
+  const miles = (n) => { const [e, d] = partes(n); return e.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + (d ? "," + d : ""); };
+  const tx = (n) => { const [e, d] = partes(n); return e.replace(/\B(?=(\d{3})+(?!\d))/g, "\\,") + (d ? "{,}" + d : ""); };
+  let o;
+  switch (plantilla) {
+    case "dosis": {
+      const k = elige([20, 25, 50]), D = r(Math.ceil(200 / k), Math.floor(600 / k)), P = k * D; // novillo de 200 a 600 kg
+      o = { texto: `Un desparasitante se aplica a razón de 1 ml por cada ${k} kg de peso. A un novillo se le aplicaron ${D} ml. ¿Cuánto pesa el novillo?`,
+        formula: `D = \\dfrac{P}{${k}}`, incognita: "P", leyenda: `D: dosis (ml), P: peso (kg)`,
+        correcta: `P = ${k}\\,D`,
+        errores: [[`P = \\dfrac{D}{${k}}`, `P está dividida entre ${k}: para dejarla sola se multiplica por ${k}, no se divide.`],
+                  [`P = \\dfrac{${k}}{D}`, "La fracción quedó invertida. Multiplique ambos lados por el denominador."],
+                  [`P = D + ${k}`, `${k} no está restando: está dividiendo. La operación inversa de dividir es multiplicar.`]],
+        pasos: [`${D} = \\dfrac{P}{${k}}`, `${D} \\cdot ${k} = P \\quad \\text{(se multiplica por ${k} a ambos lados)}`, `P = ${tx(P)}\\ \\text{kg}`],
+        respuesta: P, unidad: "kg", pregunta: "P",
+        comprobacion: `\\dfrac{${tx(P)}}{${k}} = ${D}\\ \\text{ml}\\ ✓`,
+        conclusion: `El novillo pesa ${miles(P)} kg.` };
+      break;
+    }
+    case "area": {
+      const a = r(10, 40), l = r(a + 1, 80), A = l * a;
+      o = { texto: `Un lote rectangular de siembra tiene ${miles(A)} m² de área y ${a} m de ancho. ¿Cuánto mide de largo?`,
+        formula: `A = l \\cdot a`, incognita: "l", leyenda: "A: área (m²), l: largo (m), a: ancho (m)",
+        correcta: `l = \\dfrac{A}{a}`,
+        errores: [[`l = A \\cdot a`, "a está multiplicando a l: pasa al otro lado dividiendo."],
+                  [`l = \\dfrac{a}{A}`, "La fracción quedó invertida: el área va arriba."],
+                  [`l = A - a`, "a no está sumando: está multiplicando. Lo inverso de multiplicar es dividir."]],
+        pasos: [`${tx(A)} = l \\cdot ${a}`, `\\dfrac{${tx(A)}}{${a}} = l \\quad \\text{(se divide entre ${a})}`, `l = ${l}\\ \\text{m}`],
+        respuesta: l, unidad: "m", pregunta: "l",
+        comprobacion: `${l} \\cdot ${a} = ${tx(A)}\\ \\text{m}^2\\ ✓`,
+        conclusion: `El lote mide ${l} m de largo.` };
+      break;
+    }
+    case "riego": {
+      const Q = elige([200, 250, 300, 400, 500]), t = r(2, 20), V = Q * t;
+      o = { texto: `Una bomba de riego entrega ${Q} litros por hora. ¿Cuántas horas tarda en llenar un reservorio de ${miles(V)} litros?`,
+        formula: `Q = \\dfrac{V}{t}`, incognita: "t", leyenda: "Q: caudal (L/h), V: volumen (L), t: tiempo (h)",
+        correcta: `t = \\dfrac{V}{Q}`,
+        errores: [[`t = V \\cdot Q`, "Al multiplicar por t y dividir entre Q, el caudal queda dividiendo, no multiplicando."],
+                  [`t = \\dfrac{Q}{V}`, "La fracción quedó invertida: el volumen va arriba."],
+                  [`t = V - Q`, "Q no se resta: la fórmula es una división."]],
+        pasos: [`${Q} = \\dfrac{${tx(V)}}{t}`, `${Q}\\,t = ${tx(V)} \\quad \\text{(se multiplica por } t)`, `t = \\dfrac{${tx(V)}}{${Q}} = ${t}\\ \\text{h}`],
+        respuesta: t, unidad: "h", pregunta: "t",
+        comprobacion: `\\dfrac{${tx(V)}}{${t}} = ${Q}\\ \\text{L/h}\\ ✓`,
+        conclusion: `La bomba tarda ${t} horas en llenar el reservorio.` };
+      break;
+    }
+    case "concentracion": {
+      const c = r(2, 10), V = 5 * r(1, 10), m = c * V;
+      o = { texto: `Un fungicida se prepara con una concentración de ${c} gramos por litro de agua. ¿Cuántos gramos de producto se necesitan para una bomba de ${V} litros?`,
+        formula: `c = \\dfrac{m}{V}`, incognita: "m", leyenda: "c: concentración (g/L), m: masa de producto (g), V: volumen de agua (L)",
+        correcta: `m = c \\cdot V`,
+        errores: [[`m = \\dfrac{c}{V}`, "m está dividida entre V: se despeja multiplicando por V."],
+                  [`m = \\dfrac{V}{c}`, "Así se despejaría otra letra. m está dividida entre V: multiplique por V."],
+                  [`m = c + V`, "V no está restando: está dividiendo."]],
+        pasos: [`${c} = \\dfrac{m}{${V}}`, `${c} \\cdot ${V} = m \\quad \\text{(se multiplica por ${V})}`, `m = ${tx(m)}\\ \\text{g}`],
+        respuesta: m, unidad: "g", pregunta: "m",
+        comprobacion: `\\dfrac{${tx(m)}}{${V}} = ${c}\\ \\text{g/L}\\ ✓`,
+        conclusion: `Se necesitan ${miles(m)} g de fungicida para ${V} litros de agua.` };
+      break;
+    }
+    case "distancia": {
+      const v = r(4, 12), t = r(2, 8), dd = v * t;
+      o = { texto: `Un tractor avanza a ${v} km/h por un camino de la finca. ¿Cuántas horas tarda en recorrer ${dd} km?`,
+        formula: `d = v \\cdot t`, incognita: "t", leyenda: "d: distancia (km), v: velocidad (km/h), t: tiempo (h)",
+        correcta: `t = \\dfrac{d}{v}`,
+        errores: [[`t = d \\cdot v`, "v está multiplicando a t: pasa al otro lado dividiendo."],
+                  [`t = \\dfrac{v}{d}`, "La fracción quedó invertida: la distancia va arriba."],
+                  [`t = d - v`, "v no está sumando: está multiplicando."]],
+        pasos: [`${dd} = ${v}\\,t`, `\\dfrac{${dd}}{${v}} = t \\quad \\text{(se divide entre ${v})}`, `t = ${t}\\ \\text{h}`],
+        respuesta: t, unidad: "h", pregunta: "t",
+        comprobacion: `${v} \\cdot ${t} = ${dd}\\ \\text{km}\\ ✓`,
+        conclusion: `El tractor tarda ${t} horas en recorrer ${dd} km.` };
+      break;
+    }
+    case "costo": {
+      const p = elige([800, 1000, 1200, 1500, 2000]), F = 500 * r(6, 16), n = r(5, 40), C = p * n + F;
+      o = { texto: `El veterinario cobra $${miles(F)} por la visita más $${miles(p)} por cada animal vacunado. La factura fue de $${miles(C)}. ¿Cuántos animales vacunó?`,
+        formula: `C = p\\,n + F`, incognita: "n", leyenda: "C: costo total ($), p: precio por animal ($), n: animales, F: costo de la visita ($)",
+        correcta: `n = \\dfrac{C - F}{p}`,
+        errores: [[`n = \\dfrac{C + F}{p}`, "F está sumando: al pasarla al otro lado se resta, no se suma."],
+                  [`n = \\dfrac{C}{p} - F`, "Primero se quita F (que suma) y después se divide todo entre p; aquí F quedó sin dividir."],
+                  [`n = \\dfrac{p}{C - F}`, "La fracción quedó invertida: p está multiplicando a n, así que va abajo."]],
+        pasos: [`${tx(C)} = ${tx(p)}\\,n + ${tx(F)}`, `${tx(C)} - ${tx(F)} = ${tx(p)}\\,n \\quad \\text{(se resta ${tx(F)})}`, `${tx(C - F)} = ${tx(p)}\\,n`, `n = \\dfrac{${tx(C - F)}}{${tx(p)}} = ${n}`],
+        respuesta: n, unidad: "animales", pregunta: "n",
+        comprobacion: `${tx(p)} \\cdot ${n} + ${tx(F)} = ${tx(C)}\\ ✓`,
+        conclusion: `Se vacunaron ${n} animales.` };
+      break;
+    }
+    case "engorde": {
+      const Pi = r(20, 40), g = r(8, 20), t = r(2, 6), Pf = Pi + g * t;
+      o = { texto: `Un cerdo entró al corral de engorde con ${Pi} kg y ${t} meses después pesaba ${Pf} kg. Si ganó el mismo peso cada mes, ¿cuántos kilogramos ganó por mes?`,
+        formula: `P_f = P_i + g\\,t`, incognita: "g", leyenda: "P_f: peso final (kg), P_i: peso inicial (kg), g: ganancia por mes (kg), t: meses",
+        correcta: `g = \\dfrac{P_f - P_i}{t}`,
+        errores: [[`g = \\dfrac{P_f + P_i}{t}`, "P_i está sumando: pasa al otro lado restando."],
+                  [`g = \\dfrac{P_f}{t} - P_i`, "Primero se resta P_i y después se divide todo entre t."],
+                  [`g = P_f - \\dfrac{P_i}{t}`, "Lo que se divide entre t es la diferencia completa P_f − P_i."]],
+        pasos: [`${Pf} = ${Pi} + g \\cdot ${t}`, `${Pf} - ${Pi} = ${t}\\,g \\quad \\text{(se resta ${Pi})}`, `${Pf - Pi} = ${t}\\,g`, `g = \\dfrac{${Pf - Pi}}{${t}} = ${g}\\ \\text{kg/mes}`],
+        respuesta: g, unidad: "kg/mes", pregunta: "g",
+        comprobacion: `${Pi} + ${g} \\cdot ${t} = ${Pf}\\ \\text{kg}\\ ✓`,
+        conclusion: `El cerdo ganó ${g} kg por mes.` };
+      break;
+    }
+    case "temperatura": {
+      const C = elige([38, 38.5, 39, 39.5, 40, 40.5, 41]), F = red(1.8 * C + 32);
+      const estado = C > 39.5 ? "tiene fiebre (más de 39,5 °C)" : "está en el rango normal de un bovino adulto (hasta 39,5 °C)";
+      o = { texto: `Un termómetro importado marca la temperatura en grados Fahrenheit. La vaca Lucero marcó ${miles(F)} °F. ¿Cuál es su temperatura en grados Celsius?`,
+        formula: `F = 1{,}8\\,C + 32`, incognita: "C", leyenda: "F: grados Fahrenheit, C: grados Celsius",
+        correcta: `C = \\dfrac{F - 32}{1{,}8}`,
+        errores: [[`C = \\dfrac{F + 32}{1{,}8}`, "32 está sumando: pasa al otro lado restando."],
+                  [`C = \\dfrac{F}{1{,}8} - 32`, "Primero se resta 32 y después se divide todo entre 1,8."],
+                  [`C = 1{,}8\\,(F - 32)`, "1,8 multiplica a C: pasa al otro lado dividiendo, no multiplicando."]],
+        pasos: [`${tx(F)} = 1{,}8\\,C + 32`, `${tx(F)} - 32 = 1{,}8\\,C \\quad \\text{(se resta 32)}`, `${tx(red(F - 32))} = 1{,}8\\,C`, `C = \\dfrac{${tx(red(F - 32))}}{1{,}8} = ${tx(C)}\\ ^{\\circ}\\text{C}`],
+        respuesta: C, unidad: "°C", pregunta: "C",
+        comprobacion: `1{,}8 \\cdot ${tx(C)} + 32 = ${tx(F)}\\ ^{\\circ}\\text{F}\\ ✓`,
+        conclusion: `Lucero tiene ${miles(C)} °C: ${estado}.` };
+      break;
+    }
+    case "cerca": {
+      const a = r(10, 50), l = r(a, a + 60), Pm = 2 * (l + a);
+      o = { texto: `Para cercar un potrero rectangular se usaron ${Pm} m de alambre en una hilera. El potrero mide ${a} m de ancho. ¿Cuánto mide de largo?`,
+        formula: `P = 2\\,(l + a)`, incognita: "l", leyenda: "P: perímetro (m), l: largo (m), a: ancho (m)",
+        correcta: `l = \\dfrac{P}{2} - a`,
+        errores: [[`l = \\dfrac{P - a}{2}`, "Primero se divide entre 2 (que multiplica al paréntesis) y después se resta a."],
+                  [`l = \\dfrac{P}{2} + a`, "a está sumando dentro del paréntesis: pasa al otro lado restando."],
+                  [`l = 2P - a`, "El 2 multiplica al paréntesis: se pasa dividiendo, no multiplicando."]],
+        pasos: [`${Pm} = 2\\,(l + ${a})`, `\\dfrac{${Pm}}{2} = l + ${a} \\quad \\text{(se divide entre 2)}`, `${Pm / 2} - ${a} = l \\quad \\text{(se resta ${a})}`, `l = ${l}\\ \\text{m}`],
+        respuesta: l, unidad: "m", pregunta: "l",
+        comprobacion: `2\\,(${l} + ${a}) = ${Pm}\\ \\text{m}\\ ✓`,
+        conclusion: `El potrero mide ${l} m de largo.` };
+      break;
+    }
+    case "tanque": {
+      const l = r(2, 6), a = r(1, l), h = elige([1, 1.5, 2, 2.5, 3]), V = red(l * a * h);
+      o = { texto: `Un tanque en forma de caja tiene ${miles(V)} m³ de capacidad. Su base mide ${l} m de largo y ${a} m de ancho. ¿Qué altura tiene?`,
+        formula: `V = l \\cdot a \\cdot h`, incognita: "h", leyenda: "V: volumen (m³), l: largo (m), a: ancho (m), h: altura (m)",
+        correcta: `h = \\dfrac{V}{l \\cdot a}`,
+        errores: [[`h = V \\cdot l \\cdot a`, "l y a multiplican a h: pasan al otro lado dividiendo."],
+                  [`h = \\dfrac{V}{l} - a`, "a también multiplica a h: se divide entre l y entre a."],
+                  [`h = \\dfrac{l \\cdot a}{V}`, "La fracción quedó invertida: el volumen va arriba."]],
+        pasos: [`${tx(V)} = ${l} \\cdot ${a} \\cdot h`, `${tx(V)} = ${l * a}\\,h`, `h = \\dfrac{${tx(V)}}{${l * a}} = ${tx(h)}\\ \\text{m}`],
+        respuesta: h, unidad: "m", pregunta: "h",
+        comprobacion: `${l} \\cdot ${a} \\cdot ${tx(h)} = ${tx(V)}\\ \\text{m}^3\\ ✓`,
+        conclusion: `El tanque tiene ${miles(h)} m de altura.` };
+      break;
+    }
+    default: { // siembra
+      const rho = r(2, 6), a = r(10, 30), l = r(a, 60), N = rho * l * a;
+      o = { texto: `En un lote rectangular de ${a} m de ancho se sembraron ${miles(N)} plantas, a razón de ${rho} plantas por metro cuadrado. ¿Cuánto mide el lote de largo?`,
+        formula: `N = \\rho \\cdot l \\cdot a`, incognita: "l", leyenda: "N: plantas, ρ: plantas por m², l: largo (m), a: ancho (m)",
+        correcta: `l = \\dfrac{N}{\\rho \\cdot a}`,
+        errores: [[`l = \\dfrac{N \\cdot \\rho}{a}`, "ρ multiplica a l: pasa dividiendo, igual que a."],
+                  [`l = \\dfrac{N}{\\rho} - a`, "a multiplica a l, no suma: se divide entre a."],
+                  [`l = \\dfrac{\\rho \\cdot a}{N}`, "La fracción quedó invertida: el número de plantas va arriba."]],
+        pasos: [`${tx(N)} = ${rho} \\cdot l \\cdot ${a}`, `\\dfrac{${tx(N)}}{${rho}} = ${tx(N / rho)} = l \\cdot ${a} \\quad \\text{(área en m}^2)`, `l = \\dfrac{${tx(N / rho)}}{${a}} = ${l}\\ \\text{m}`],
+        respuesta: l, unidad: "m", pregunta: "l",
+        comprobacion: `${rho} \\cdot ${l} \\cdot ${a} = ${tx(N)}\\ \\text{plantas}\\ ✓`,
+        conclusion: `El lote mide ${l} m de largo (${miles(N / rho)} m² sembrados).` };
+    }
+  }
+  // Las cuatro opciones en orden aleatorio; se guarda cuál es la correcta
+  const opciones = [{ tex: o.correcta, ok: true, pista: "" }, ...o.errores.map(([tex, pista]) => ({ tex, ok: false, pista }))];
+  for (let i = opciones.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [opciones[i], opciones[j]] = [opciones[j], opciones[i]]; }
+  return { plantilla, ...o, opciones, decimales: !Number.isInteger(o.respuesta) };
+};
+
+// ── RAZONAMIENTO DEDUCTIVO 1: tablas lógicas (tabla matricial con pistas) ──────
+// Se sortea una solución y se agregan pistas verdaderas hasta que el solucionador
+// paso a paso (pistas directas, descarte en filas/columnas y encadenamiento) la
+// determina por completo; luego se quitan las pistas que sobran. Así la solución es
+// única y siempre se puede deducir sin probar casos.
+var LOGICA_DATOS = {
+  personas: ["Ana", "Beto", "Carla", "Darío", "Elena", "Felipe", "Gloria", "Hugo"],
+  cats: {
+    cultivo: { nombre: "Cultivo", v: "cultiva", o: (x) => x, ni: "ni", items: ["café", "maíz", "plátano", "yuca", "cacao", "fríjol", "papa", "aguacate"] },
+    animal: { nombre: "Animal", v: "cría", o: (x) => x, ni: "ni", items: ["cabras", "cerdos", "gallinas", "ovejas", "conejos", "patos", "abejas"] },
+    finca: { nombre: "Finca", v: "vive en", o: (x) => "la finca " + x, ni: "ni en", items: ["El Roble", "La Esperanza", "El Porvenir", "Villa Luz", "Los Pinos", "La Palma"] },
+  },
+};
+var LOGICA_NIVELES = [
+  { id: "logica_basico", nivel: "basico", title: "Tabla básica", icon: "🧩", desc: "3 productores y su cultivo", n: 3, cats: ["cultivo"] },
+  { id: "logica_intermedio", nivel: "intermedio", title: "Tabla intermedia", icon: "🧩", desc: "3 productores, cultivo y animal", n: 3, cats: ["cultivo", "animal"] },
+  { id: "logica_avanzado", nivel: "avanzado", title: "Tabla avanzada", icon: "🧩", desc: "4 productores, finca, cultivo y animal", n: 4, cats: ["finca", "cultivo", "animal"] },
+];
+// Clave canónica de la casilla que relaciona el ítem i de la categoría c1 con el ítem j de c2
+var logicaClave = (c1, i, c2, j) => (c1 < c2 ? `${c1}:${i}|${c2}:${j}` : `${c2}:${j}|${c1}:${i}`);
+
+// Solucionador paso a paso. Devuelve los pasos (casilla, valor, razón) y si quedó completa.
+var logicaResolver = (cats, n, pistas) => {
+  const K = cats.length, G = new Map(), pasos = [];
+  const nm = (c, i) => cats[c].items[i];
+  const set = (c1, i, c2, j, val, razon) => {
+    const k = logicaClave(c1, i, c2, j);
+    if (G.has(k)) return false;
+    G.set(k, val);
+    // a y b en el orden de la tabla: primero el productor, luego finca, cultivo y animal
+    const [x, y] = c1 < c2 ? [nm(c1, i), nm(c2, j)] : [nm(c2, j), nm(c1, i)];
+    pasos.push({ k, val, razon, a: x, b: y }); return true;
+  };
+  const get = (c1, i, c2, j) => G.get(logicaClave(c1, i, c2, j));
+  pistas.forEach((p, t) => {
+    const r = `Por la pista ${t + 1}`;
+    if (p.tipo === "pos") set(p.a[0], p.a[1], p.b[0], p.b[1], true, r);
+    else { set(p.a[0], p.a[1], p.b[0], p.b[1], false, r); if (p.tipo === "neg2") set(p.a[0], p.a[1], p.b2[0], p.b2[1], false, r); }
+  });
+  let cambio = true;
+  while (cambio) {
+    cambio = false;
+    for (let c1 = 0; c1 < K; c1++) for (let c2 = 0; c2 < K; c2++) {
+      if (c1 === c2) continue;
+      for (let i = 0; i < n; i++) {
+        const vals = Array.from({ length: n }, (_, j) => get(c1, i, c2, j));
+        const si = vals.indexOf(true);
+        if (si >= 0) {
+          for (let j = 0; j < n; j++) if (j !== si && vals[j] === undefined) cambio = set(c1, i, c2, j, false, `${nm(c1, i)} ya va con ${nm(c2, si)}`) || cambio;
+        } else if (vals.filter((x) => x === false).length === n - 1) {
+          const j = vals.indexOf(undefined);
+          if (j >= 0) cambio = set(c1, i, c2, j, true, `Por descarte: ${nm(c1, i)} no va con ninguna otra opción de ${cats[c2].nombre.toLowerCase()}`) || cambio;
+        }
+      }
+    }
+    for (let a = 0; a < K; a++) for (let b = 0; b < K; b++) for (let c = 0; c < K; c++) {
+      if (a === b || b === c || a === c) continue;
+      for (let x = 0; x < n; x++) for (let y = 0; y < n; y++) {
+        if (get(a, x, b, y) !== true) continue;
+        for (let z = 0; z < n; z++) {
+          const yz = get(b, y, c, z);
+          if (yz === true) cambio = set(a, x, c, z, true, `${nm(a, x)} va con ${nm(b, y)}, y ${nm(b, y)} va con ${nm(c, z)}`) || cambio;
+          else if (yz === false) cambio = set(a, x, c, z, false, `${nm(a, x)} va con ${nm(b, y)}, y ${nm(b, y)} no va con ${nm(c, z)}`) || cambio;
+        }
+      }
+    }
+  }
+  const total = (K * (K - 1) / 2) * n * n;
+  return { pasos, completo: G.size === total };
+};
+
+var genTablaLogica = (nivel) => {
+  const cfg = LOGICA_NIVELES.find((x) => x.nivel === nivel) || LOGICA_NIVELES[0];
+  const n = cfg.n;
+  const mezcla = (xs) => { const a = [...xs]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const r = (k) => Math.floor(Math.random() * k);
+  for (let intento = 0; intento < 100; intento++) {
+    const cats = [{ nombre: "Productor", items: mezcla(LOGICA_DATOS.personas).slice(0, n).sort((a, b) => a.localeCompare(b, "es")) },
+      ...cfg.cats.map((k) => ({ ...LOGICA_DATOS.cats[k], clave: k, items: mezcla(LOGICA_DATOS.cats[k].items).slice(0, n) }))];
+    const K = cats.length;
+    // sol[c][i] = productor que tiene el ítem i de la categoría c
+    const sol = cats.map((_, c) => (c === 0 ? Array.from({ length: n }, (_, i) => i) : mezcla(Array.from({ length: n }, (_, i) => i))));
+    const socio = (c, i, c2) => sol[c2].indexOf(sol[c][i]);
+    const nueva = () => {
+      const cb = 1 + r(K - 1);
+      let ca = Math.random() < 0.55 ? 0 : r(K);
+      if (ca === cb) ca = 0;
+      const i = r(n), j0 = socio(ca, i, cb), t = Math.random();
+      if (t < 0.18 && (ca !== 0 || Math.random() < 0.3)) return { tipo: "pos", a: [ca, i], b: [cb, j0] };
+      const otros = mezcla(Array.from({ length: n }, (_, j) => j).filter((j) => j !== j0));
+      if (t < 0.45 && otros.length >= 2) return { tipo: "neg2", a: [ca, i], b: [cb, otros[0]], b2: [cb, otros[1]] };
+      return { tipo: "neg", a: [ca, i], b: [cb, otros[0]] };
+    };
+    const firma = (p) => p.tipo + p.a + "|" + [p.b, p.b2 || []].map(String).sort().join("|");
+    let pistas = [], guarda = 0;
+    while (!logicaResolver(cats, n, pistas).completo && guarda++ < 80) {
+      const p = nueva();
+      if (!pistas.some((q) => firma(q) === firma(p))) pistas.push(p);
+    }
+    if (!logicaResolver(cats, n, pistas).completo) continue;
+    for (let k = pistas.length - 1; k >= 0; k--) {
+      const sin = pistas.filter((_, t) => t !== k);
+      if (logicaResolver(cats, n, sin).completo) pistas = sin;
+    }
+    const sujeto = ([c, i]) => (c === 0 ? cats[0].items[i] : `Quien ${cats[c].v} ${cats[c].o(cats[c].items[i])}`);
+    const pred = ([c, j]) => `${cats[c].v} ${cats[c].o(cats[c].items[j])}`;
+    const textos = pistas.map((p) =>
+      p.tipo === "pos" ? `${sujeto(p.a)} ${pred(p.b)}.`
+        : p.tipo === "neg" ? `${sujeto(p.a)} no ${pred(p.b)}.`
+          : `${sujeto(p.a)} no ${pred(p.b)} ${cats[p.b[0]].ni} ${cats[p.b2[0]].o(cats[p.b2[0]].items[p.b2[1]])}.`);
+    const res = logicaResolver(cats, n, pistas);
+    return {
+      nivel: cfg.nivel, n, K,
+      cats: cats.map((c) => ({ nombre: c.nombre, items: c.items })),
+      pistas, textos, sol, pasos: res.pasos,
+      // ¿La casilla (clave canónica) es verdadera en la solución?
+      verdad: (k) => { const [[c1, i], [c2, j]] = k.split("|").map((s) => s.split(":").map(Number)); return sol[c1][i] === sol[c2][j]; },
+    };
+  }
+  return genTablaLogica(nivel);
+};
+
+// ── RAZONAMIENTO DEDUCTIVO 2: ¿qué se puede concluir? ─────────────────────────
+var DEDUCCION_TIPOS = [
+  { id: "ded_silogismo", tipo: "silogismo", icon: "🐄", title: "Silogismos", desc: "«Todos los… son…»" },
+  { id: "ded_condicional", tipo: "condicional", icon: "🔀", title: "Si…, entonces…", desc: "Reglas con una condición" },
+  { id: "ded_variado", tipo: "variado", icon: "🎲", title: "Variado", desc: "Cualquiera de los anteriores" },
+];
+var DEDUCCION_NADA = "No se puede concluir nada con certeza.";
+var DEDUCCION_SILOGISMOS = [
+  { todos: "Todos los bovinos son rumiantes.", es: "Lucero es un bovino.", conc: "Lucero es rumiante.", no: "Lucero no es rumiante.", inversa: "Todos los rumiantes son bovinos." },
+  { todos: "Todas las gallinas son aves.", es: "La Pinta es una gallina.", conc: "La Pinta es un ave.", no: "La Pinta no es un ave.", inversa: "Todas las aves son gallinas." },
+  { todos: "Todas las leguminosas fijan nitrógeno en el suelo.", es: "El fríjol es una leguminosa.", conc: "El fríjol fija nitrógeno en el suelo.", no: "El fríjol no fija nitrógeno en el suelo.", inversa: "Todas las plantas que fijan nitrógeno son leguminosas." },
+  { todos: "Todos los cerdos son omnívoros.", es: "Rosita es una cerda.", conc: "Rosita es omnívora.", no: "Rosita no es omnívora.", inversa: "Todos los omnívoros son cerdos." },
+  { todos: "Todos los equinos son herbívoros.", es: "Trueno es un equino.", conc: "Trueno es herbívoro.", no: "Trueno no es herbívoro.", inversa: "Todos los herbívoros son equinos." },
+];
+// Reglas «si P, entonces Q» con los hechos y conclusiones posibles, y otra causa de Q (para las falacias)
+var DEDUCCION_REGLAS = [
+  { regla: "Si llueven más de 50 mm en el día, entonces se suspende la fumigación.",
+    P: "Hoy llovieron 70 mm.", noP: "Hoy llovieron 20 mm.", Q: "Hoy se suspendió la fumigación.", noQ: "Hoy no se suspendió la fumigación.",
+    cP: "Hoy llovieron más de 50 mm.", cNoP: "Hoy no llovieron más de 50 mm.", cQ: "Hoy se suspende la fumigación.", cNoQ: "Hoy no se suspende la fumigación.",
+    otra: "la fumigación también se puede suspender por viento fuerte o por falta de producto" },
+  { regla: "Si una vaca tiene fiebre, entonces su temperatura pasa de 39,5 °C.",
+    P: "Lucero tiene fiebre.", noP: "Lucero no tiene fiebre.", Q: "La temperatura de Lucero pasa de 39,5 °C.", noQ: "La temperatura de Lucero es 38,6 °C.",
+    cP: "Lucero tiene fiebre.", cNoP: "Lucero no tiene fiebre.", cQ: "La temperatura de Lucero pasa de 39,5 °C.", cNoQ: "La temperatura de Lucero no pasa de 39,5 °C.",
+    otra: "la temperatura también sube por un golpe de calor o después de un esfuerzo, sin que haya fiebre" },
+  { regla: "Si el lote tiene gusano cogollero, entonces las hojas del maíz tienen perforaciones.",
+    P: "El lote 3 tiene gusano cogollero.", noP: "El lote 3 no tiene gusano cogollero.", Q: "Las hojas del maíz del lote 3 tienen perforaciones.", noQ: "Las hojas del maíz del lote 3 no tienen perforaciones.",
+    cP: "El lote 3 tiene gusano cogollero.", cNoP: "El lote 3 no tiene gusano cogollero.", cQ: "Las hojas del lote 3 tienen perforaciones.", cNoQ: "Las hojas del lote 3 no tienen perforaciones.",
+    otra: "las perforaciones también pueden deberse al granizo o a otros insectos" },
+  { regla: "Si la leche está ácida, entonces no pasa la prueba de alcohol.",
+    P: "La leche del tanque está ácida.", noP: "La leche del tanque no está ácida.", Q: "La leche del tanque no pasó la prueba de alcohol.", noQ: "La leche del tanque pasó la prueba de alcohol.",
+    cP: "La leche del tanque está ácida.", cNoP: "La leche del tanque no está ácida.", cQ: "La leche del tanque no pasa la prueba de alcohol.", cNoQ: "La leche del tanque pasa la prueba de alcohol.",
+    otra: "la leche también puede fallar la prueba por mastitis o por tener calostro" },
+  { regla: "Si un ternero fue vacunado contra aftosa, entonces aparece en el registro de vacunación.",
+    P: "El ternero Pecas fue vacunado contra aftosa.", noP: "El ternero Pecas no fue vacunado contra aftosa.", Q: "Pecas aparece en el registro de vacunación.", noQ: "Pecas no aparece en el registro de vacunación.",
+    cP: "Pecas fue vacunado contra aftosa.", cNoP: "Pecas no fue vacunado contra aftosa.", cQ: "Pecas aparece en el registro de vacunación.", cNoQ: "Pecas no aparece en el registro de vacunación.",
+    otra: "un ternero puede estar en el registro por error, o porque la vacuna se programó y no se aplicó" },
+  { regla: "Si se riega el pasto en verano, entonces el potrero se mantiene verde.",
+    P: "Este verano se regó el potrero La Loma.", noP: "Este verano no se regó el potrero La Loma.", Q: "El potrero La Loma se mantuvo verde.", noQ: "El potrero La Loma no se mantuvo verde.",
+    cP: "Este verano se regó La Loma.", cNoP: "Este verano no se regó La Loma.", cQ: "La Loma se mantiene verde.", cNoQ: "La Loma no se mantiene verde.",
+    otra: "el potrero también puede seguir verde porque llovió o porque tiene un nacimiento de agua" },
+];
+var genDeduccion = (tipo) => {
+  const elige = (xs) => xs[Math.floor(Math.random() * xs.length)];
+  const t = tipo === "variado" ? elige(["silogismo", "condicional", "condicional"]) : tipo;
+  let o;
+  if (t === "silogismo") {
+    const s = elige(DEDUCCION_SILOGISMOS);
+    o = { forma: "Silogismo", premisas: [s.todos, s.es],
+      opciones: [{ t: s.conc, ok: true }, { t: s.no, nota: "Contradice las premisas." }, { t: s.inversa, nota: "Es la frase al revés: que todos los A sean B no dice que todos los B sean A." }, { t: DEDUCCION_NADA, nota: "Sí se puede concluir algo: el caso pertenece al grupo y hereda su propiedad." }],
+      explicacion: `Si todo el grupo cumple la propiedad y el caso pertenece al grupo, el caso también la cumple: ${s.conc}` };
+  } else {
+    const g = elige(DEDUCCION_REGLAS), f = elige(["ponens", "tollens", "afirmar", "negar"]);
+    if (f === "ponens") o = { forma: "Modus ponens", premisas: [g.regla, g.P],
+      opciones: [{ t: g.cQ, ok: true }, { t: g.cNoQ, nota: "Contradice la regla: la condición se cumplió." }, { t: g.cNoP, nota: "Contradice el hecho dado." }, { t: DEDUCCION_NADA, nota: "Sí se puede: la condición se cumplió, así que la consecuencia también." }],
+      explicacion: `La condición de la regla se cumple, así que la consecuencia también: ${g.cQ}` };
+    else if (f === "tollens") o = { forma: "Modus tollens", premisas: [g.regla, g.noQ],
+      opciones: [{ t: g.cNoP, ok: true }, { t: g.cP, nota: "Si fuera así, por la regla se habría cumplido la consecuencia, y no se cumplió." }, { t: g.cQ, nota: "Contradice el hecho dado." }, { t: DEDUCCION_NADA, nota: "Sí se puede: si la condición se hubiera cumplido, la consecuencia también; como la consecuencia no se cumplió, la condición tampoco." }],
+      explicacion: `Si la condición se hubiera cumplido, la regla obliga a que se cumpla la consecuencia; como la consecuencia no se cumplió, la condición tampoco: ${g.cNoP}` };
+    else if (f === "afirmar") o = { forma: "Falacia de afirmar el consecuente", premisas: [g.regla, g.Q],
+      opciones: [{ t: DEDUCCION_NADA, ok: true }, { t: g.cP, nota: "Es la falacia de afirmar el consecuente: la consecuencia puede tener otras causas." }, { t: g.cNoP, nota: "Tampoco se sabe: la condición pudo cumplirse o no." }, { t: g.cNoQ, nota: "Contradice el hecho dado." }],
+      explicacion: `La regla dice qué pasa cuando se cumple la condición, pero la consecuencia puede tener otras causas: ${g.otra}. Concluir que la condición se cumplió sería la falacia de afirmar el consecuente.` };
+    else o = { forma: "Falacia de negar el antecedente", premisas: [g.regla, g.noP],
+      opciones: [{ t: DEDUCCION_NADA, ok: true }, { t: g.cNoQ, nota: "Es la falacia de negar el antecedente: la consecuencia puede ocurrir por otras causas." }, { t: g.cQ, nota: "Tampoco se sabe: la regla no dice qué pasa cuando la condición no se cumple." }, { t: g.cP, nota: "Contradice el hecho dado." }],
+      explicacion: `La regla no dice qué pasa cuando la condición no se cumple; la consecuencia puede ocurrir igual por otras causas: ${g.otra}. Concluir lo contrario sería la falacia de negar el antecedente.` };
+  }
+  const op = [...o.opciones];
+  for (let i = op.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [op[i], op[j]] = [op[j], op[i]]; }
+  return { tipo: t, ...o, opciones: op };
 };

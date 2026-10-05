@@ -1,0 +1,118 @@
+/* Estilo de impresión de los manuales de usuario (se convierten a PDF con Chrome) */
+@page {
+    size: A4;
+    margin: 18mm 17mm 20mm 17mm;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', 'Noto Sans', 'DejaVu Sans', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+    color: #212529;
+    margin: 0;
+}
+
+h1, h2, h3, h4 { color: #343a40; line-height: 1.25; }
+h2 {
+    font-size: 17pt;
+    margin: 0 0 10pt;
+    padding-bottom: 5pt;
+    border-bottom: 2pt solid #007bff;
+    break-before: page;
+}
+h3 { font-size: 13pt; margin: 16pt 0 6pt; color: #0d47a1; break-after: avoid; }
+/* Cada herramienta empieza en una página nueva */
+h3.nueva-pagina { break-before: page; margin-top: 0; }
+h4 { font-size: 11pt; margin: 12pt 0 4pt; break-after: avoid; }
+p { margin: 0 0 7pt; }
+ul, ol { margin: 0 0 8pt; padding-left: 18pt; }
+li { margin-bottom: 3pt; }
+code, kbd {
+    font-family: 'DejaVu Sans Mono', 'Courier New', monospace;
+    font-size: 9.5pt;
+    background: #f1f3f5;
+    border: 1px solid #dee2e6;
+    border-radius: 3px;
+    padding: 0 3px;
+}
+strong { color: #000; }
+
+/* ---- Portada ---- */
+.portada {
+    height: 250mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.portada .franja {
+    background: #343a40;
+    color: #fff;
+    padding: 28pt 20pt;
+    border-radius: 6pt;
+    margin-bottom: 24pt;
+}
+.portada .franja h1 { color: #fff; font-size: 26pt; margin: 0 0 8pt; }
+.portada .franja p { font-size: 13pt; margin: 0; color: #dee2e6; }
+.portada .subtitulo { font-size: 20pt; color: #007bff; font-weight: 600; margin-bottom: 30pt; }
+.portada .datos { font-size: 11pt; color: #495057; }
+.portada img { max-width: 100%; border: 1px solid #dee2e6; border-radius: 4pt; margin: 0 auto 20pt; }
+
+/* ---- Índice ---- */
+.indice { break-before: page; }
+.indice h2 { break-before: avoid; }
+.indice ol { list-style: none; padding-left: 0; }
+.indice ol ol { padding-left: 16pt; }
+.indice li { margin-bottom: 4pt; }
+.indice a { color: #212529; text-decoration: none; }
+.indice > ol > li > a { font-weight: 600; }
+
+/* ---- Figuras ---- */
+figure {
+    margin: 10pt 0 12pt;
+    text-align: center;
+    break-inside: avoid;
+}
+figure img {
+    max-width: 100%;
+    max-height: 165mm;
+    border: 1px solid #ced4da;
+    border-radius: 3pt;
+}
+figcaption { font-size: 9pt; color: #6c757d; margin-top: 4pt; font-style: italic; }
+
+/* ---- Tablas ---- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 6pt 0 10pt;
+    font-size: 9.5pt;
+    break-inside: avoid;
+}
+th, td { border: 1px solid #ced4da; padding: 4pt 6pt; text-align: left; vertical-align: top; }
+th { background: #e9ecef; }
+
+/* ---- Cajas de nota ---- */
+.nota, .consejo, .atencion {
+    border-left: 4pt solid;
+    border-radius: 3pt;
+    padding: 6pt 10pt;
+    margin: 8pt 0 10pt;
+    break-inside: avoid;
+}
+.nota { background: #e7f1ff; border-color: #0d6efd; }
+.consejo { background: #e8f5e9; border-color: #198754; }
+.atencion { background: #fff8e1; border-color: #ffc107; }
+.nota p:last-child, .consejo p:last-child, .atencion p:last-child { margin-bottom: 0; }
+
+.pasos li { margin-bottom: 4pt; }
+.ficha {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4pt;
+    padding: 6pt 10pt;
+    margin-bottom: 8pt;
+    font-size: 9.5pt;
+}

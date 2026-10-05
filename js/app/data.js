@@ -312,7 +312,7 @@ var xr = [
       category: "engorde",
       problemas: [
         // 1: 50×1.5×3 = 225
-        { texto: "Un criador tiene 50 cerdos para engorde. Cada uno aumenta 1.5 kg por mes. ¿Cuánto aumentan en total en 3 meses?", respuesta: 225 },
+        { texto: "Un criador tiene 50 cerdos para engorde. Cada uno aumenta 1,5 kg por mes. ¿Cuánto aumentan en total en 3 meses?", respuesta: 225 },
         // 2: 30×25 = 750
         { texto: "Se engordan 30 reses. Cada una gana 25 kg en 6 meses. ¿Cuántos kg ganan en total?", respuesta: 750 },
         // 3: 3×80×2 = 480
@@ -386,9 +386,9 @@ var xr = [
     {
       id: "probi_conv", title: "Prob. Conversiones", icon: "🔄", type: "probi",
       problemas: [
-        { texto: "Convierte 15 kilómetros a metros (1 km = 1000 m). ¿Cuántos metros son?", a: 15, b: 1000, op: "mult" },
+        { texto: "Convierta 15 kilómetros a metros (1 km = 1000 m). ¿Cuántos metros son?", a: 15, b: 1000, op: "mult" },
         { texto: "¿Cuántos minutos hay en 24 horas? (1 hora = 60 minutos)", a: 24, b: 60, op: "mult" },
-        { texto: "Convierte 35 kilogramos a gramos (1 kg = 1000 g). ¿Cuántos gramos son?", a: 35, b: 1000, op: "mult" },
+        { texto: "Convierta 35 kilogramos a gramos (1 kg = 1000 g). ¿Cuántos gramos son?", a: 35, b: 1000, op: "mult" },
         { texto: "¿Cuántos centímetros hay en 48 metros? (1 m = 100 cm)", a: 48, b: 100, op: "mult" },
         { texto: "¿Cuántos segundos hay en 5 horas? (1 hora = 3600 segundos)", a: 5, b: 3600, op: "mult" },
       ],

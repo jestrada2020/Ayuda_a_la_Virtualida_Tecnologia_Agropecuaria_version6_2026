@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Manual de usuario — Matemáticas en Técnicas Agropecuarias</title>
+<link rel="stylesheet" href="estilo_manual.css">
+<style>
+    figure img { max-height: 118mm; }
+    .portada img { max-height: 100mm; }
+    .portada { height: 240mm; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+</head>
+<body>
+
+<!-- ================= PORTADA ================= -->
+<section class="portada">
+    <div class="franja">
+        <h1>Matemáticas en Técnicas Agropecuarias</h1>
+        <p>Caja de Herramientas Matemáticas</p>
+    </div>
+    <p class="subtitulo">Manual de usuario</p>
+    <img src="img/interfaz.jpg" alt="Interfaz de la aplicación">
+    <p class="datos">
+        Facultad de Ciencias Agropecuarias y Naturales — Programa de Tecnología Agropecuaria (UCES)<br>
+        Equipo: Carlos Andrés Escobar Guerra, Pablo Andrés Guzmán, John Jairo Estrada Álvarez y Juan Alberto Arias Quiceno<br>
+        Versión 7.7 — octubre de 2026
+    </p>
+</section>
+
+<!-- ================= ÍNDICE ================= -->
+<section class="indice">
+<h2>Contenido</h2>
+<ol>
+    <li><a href="#presentacion">1. Presentación</a></li>
+    <li><a href="#requisitos">2. Requisitos y cómo abrir la aplicación</a></li>
+    <li><a href="#interfaz">3. La interfaz</a>
+        <ol>
+            <li><a href="#inicio">3.1 La pantalla de Inicio</a></li>
+            <li><a href="#introduccion">3.2 Introducción a la Caja</a></li>
+        </ol>
+    </li>
+    <li><a href="#ejercicios">4. Cómo se resuelve un ejercicio</a></li>
+    <li><a href="#agro">5. Técnicas agropecuarias</a>
+        <ol>
+            <li><a href="#regla3">5.1 Regla de 3 Agropecuaria</a></li>
+            <li><a href="#algebra">5.2 Álgebra y Finca</a></li>
+            <li><a href="#geometria">5.3 Conceptos Geométricos</a></li>
+            <li><a href="#despeje">5.4 Despeje de Variables</a></li>
+            <li><a href="#estudio">5.5 Razonamiento Deductivo</a></li>
+        </ol>
+    </li>
+    <li><a href="#aritmetica">6. Aritmética y álgebra</a>
+        <ol>
+            <li><a href="#sumas">6.1 Sumas (enteros y decimales)</a></li>
+            <li><a href="#restas">6.2 Restas y verificación</a></li>
+            <li><a href="#mults">6.3 Multiplicación paso a paso</a></li>
+            <li><a href="#divs">6.4 Divisiones y decimales</a></li>
+            <li><a href="#fracciones">6.5 Fracciones y potencias</a></li>
+            <li><a href="#factorizacion">6.6 Factorización de trinomios</a></li>
+            <li><a href="#expr">6.7 Signos de agrupación</a></li>
+            <li><a href="#probs">6.8 Problemas aritméticos</a></li>
+        </ol>
+    </li>
+    <li><a href="#curriculo">7. Currículo y recursos</a>
+        <ol>
+            <li><a href="#pdf">7.1 Módulos oficiales (PDF)</a></li>
+            <li><a href="#videos">7.2 Aprendo con videos</a></li>
+            <li><a href="#evaluaciones">7.3 Evaluaciones en línea</a></li>
+            <li><a href="#geogebra">7.4 GeoGebra clásico y guía rápida</a></li>
+            <li><a href="#manual">7.5 La pestaña «Manual de usuario»</a></li>
+        </ol>
+    </li>
+    <li><a href="#problemas">8. Solución de problemas</a></li>
+</ol>
+</section>
+
+<!-- ================= 1 ================= -->
+<h2 id="presentacion">1. Presentación</h2>
+<p><strong>Matemáticas en Técnicas Agropecuarias</strong> es una aplicación de la Caja de Herramientas Matemáticas de la Facultad de Ciencias Agropecuarias y Naturales, pensada para los estudiantes del programa de <strong>Tecnología Agropecuaria</strong>. Reúne ejercicios interactivos, guías en PDF, videos y evaluaciones del curso en un solo lugar.</p>
+<p>Los ejercicios se plantean con situaciones del campo: dosis de vacunas e ivermectina, raciones de concentrado, semillas de pasto, fertilizantes, riego, dimensiones de corrales, parcelas y estanques, y problemas de compra, venta e inventario en la finca. Cada ejercicio se resuelve <strong>paso a paso</strong>: la aplicación indica qué casilla llenar, comprueba cada respuesta y ofrece ayuda con el proceso.</p>
+<div class="consejo">
+    <p><strong>Idea de uso.</strong> Vea primero el video del tema (pestaña «Aprendo con videos» o la tarjeta de video de cada herramienta), lea el módulo en PDF y luego practique con los ejercicios. Cuando se sienta seguro, presente la evaluación en línea del módulo.</p>
+</div>
+
+<!-- ================= 2 ================= -->
+<h2 id="requisitos">2. Requisitos y cómo abrir la aplicación</h2>
+<ul>
+    <li>Un navegador moderno (Chrome, Edge, Firefox) en computador, tableta o celular. No hay que instalar nada.</li>
+    <li>Conexión a internet para mostrar las fórmulas (KaTeX), los íconos, los videos de YouTube, GeoGebra y las evaluaciones en línea. Los ejercicios, los PDF de los módulos y este manual están dentro de la carpeta de la aplicación.</li>
+</ul>
+<p>Hay dos formas de abrirla:</p>
+<ol class="pasos">
+    <li><strong>Directamente:</strong> abra la carpeta de la aplicación y haga doble clic en <code>index.html</code>.</li>
+    <li><strong>Con un servidor local</strong> (recomendado si el navegador no muestra los PDF): en una terminal, dentro de la carpeta, ejecute <code>./iniciar.sh</code> (o <code>python3 -m http.server 8080</code>) y abra <code>http://localhost:8080</code>.</li>
+</ol>
+
+<!-- ================= 3 ================= -->
+<h2 id="interfaz">3. La interfaz</h2>
+<p>La pantalla tiene tres zonas: el <strong>encabezado</strong> superior, la <strong>barra lateral</strong> oscura con todas las pestañas y el <strong>área de trabajo</strong>, donde aparece la herramienta elegida.</p>
+<figure>
+    <img src="img/interfaz.jpg" alt="Interfaz general">
+    <figcaption>Figura 1. Pantalla de Inicio: encabezado con el menú superior, barra lateral con los cuatro grupos de pestañas y tarjetas de las herramientas.</figcaption>
+</figure>
+<table>
+    <tr><th>Zona</th><th>Contenido</th></tr>
+    <tr><td>Encabezado</td><td>Accesos rápidos: <strong>Inicio</strong>, <strong>Introducción</strong>, <strong>Aprendo con videos</strong>, <strong>Módulos PDF ▾</strong> (lista desplegable para abrir un módulo en el visor), <strong>Evaluaciones</strong> y <strong>GeoGebra Clásico</strong> (se abre en una pestaña nueva). El botón 💬 abre la <strong>Ayuda rápida</strong>: escriba un tema (suma, fracciones, regla de tres, área, factorización…) y recibirá una explicación breve con el botón «Abrir la herramienta →».</td></tr>
+    <tr><td>Barra lateral: General</td><td>Inicio e Introducción a la Caja.</td></tr>
+    <tr><td>Barra lateral: Técnicas agropecuarias</td><td>Regla de 3 Agropecuaria, Álgebra y Finca, Conceptos Geométricos, Despeje de Variables y Razonamiento Deductivo.</td></tr>
+    <tr><td>Barra lateral: Aritmética y álgebra</td><td>Sumas, Restas, Multiplicación, Divisiones, Fracciones y Potencias, Factorización de Trinomios, Signos de Agrupación y Problemas Aritméticos.</td></tr>
+    <tr><td>Barra lateral: Currículo y recursos</td><td>Módulos Oficiales (PDF), Aprendo con videos, Evaluaciones en Línea, GeoGebra Clásico y Manual de usuario.</td></tr>
+    <tr><td>Videos de la barra lateral</td><td>Al final de la barra: el video introductorio del curso y el video que describe el contenido de la aplicación.</td></tr>
+</table>
+<p>La pestaña abierta se resalta en azul en la barra lateral. Al cambiar de pestaña, el área de trabajo vuelve al principio de la página.</p>
+
+<h3 id="inicio">3.1 La pantalla de Inicio</h3>
+<p>Arriba hay una presentación con tres botones: <strong>Leer Introducción Completa y Equipo</strong>, <strong>Aprendo con videos</strong> y <strong>GeoGebra Clásico</strong>. Debajo está el catálogo «Caja de Herramientas Matemáticas»:</p>
+<ul>
+    <li><strong>Filtros por categoría</strong>: Todas las Herramientas, Técnicas Agropecuarias, Aritmética Paso a Paso, Álgebra y Proporciones, y Módulos y Recursos. El contador de la derecha indica cuántas herramientas muestra el filtro.</li>
+    <li><strong>Tarjetas</strong>: cada herramienta tiene una descripción, <strong>sub-módulos y accesos rápidos</strong> (por ejemplo, en Regla de 3: Vacunas, Ivermectina, Concentrado y Pasto/Fert.; en Factorización: Positivas, Negativas y Signos Mixtos; en Problemas: Tienda y Ganado), que abren directamente un ejercicio de ese tipo y el botón azul para abrir la herramienta.</li>
+</ul>
+
+<h3 id="introduccion">3.2 Introducción a la Caja</h3>
+<p>Cuenta el origen de la Caja de Herramientas, su relación con los problemas del sector agropecuario y presenta al equipo de trabajo. Al final tiene tarjetas con el botón para abrir cada herramienta.</p>
+
+<!-- ================= 4 ================= -->
+<h2 id="ejercicios">4. Cómo se resuelve un ejercicio</h2>
+<p>Casi todas las herramientas funcionan igual:</p>
+<ol class="pasos">
+    <li>En la pestaña, elija el tipo de ejercicio (botones de colores con la palabra <strong>Practicar</strong> o con el nombre del caso). La aplicación genera un ejercicio nuevo con números al azar.</li>
+    <li>La casilla que debe llenar aparece <strong>resaltada en amarillo</strong> con un signo <strong>?</strong>, y un texto debajo indica qué se pide (por ejemplo «Columna 1 de 3: 3 + 8 = ?» o «Escriba x₁ (la solución menor)»).</li>
+    <li>Escriba la respuesta con el <strong>teclado numérico</strong> de la pantalla (0 a 9). La tecla <strong>⌫</strong> o <strong>Borrar</strong> borra el último dígito; la tecla <strong>±</strong> (en factorización) cambia el signo.</li>
+    <li>En las sumas, restas, multiplicaciones y divisiones cada cifra se comprueba al escribirla: si es correcta, la casilla resaltada pasa sola a la siguiente; si no, se queda en la misma para intentarlo otra vez. En los demás ejercicios se pulsa <strong>✓ Verificar</strong>.</li>
+    <li><strong>📖 Ver Ayuda / Proceso</strong> muestra el procedimiento del ejercicio (en factorización, «Ayuda — Método Po-Shen Loh»).</li>
+    <li><strong>Nuevo</strong> genera otro ejercicio del mismo tipo, <strong>Reintentar</strong> borra lo escrito y <strong>Salir</strong> vuelve a la lista de ejercicios de la herramienta. <strong>Volver</strong>, al pie de cada lista, regresa al Inicio.</li>
+</ol>
+<div class="nota">
+    <p>En <strong>Signos de Agrupación</strong> y en los <strong>problemas</strong> de Tienda, Finca, Ganado y Engorde la respuesta se escribe en una casilla con el teclado del equipo. La aplicación dice «¡Correcto! ✓» o «Incorrecto ✗» solo al pulsar <strong>Verificar</strong>; en Signos de Agrupación, además, muestra el proceso después de verificar.</p>
+</div>
+
+<!-- ================= 5 ================= -->
+<h2 id="agro">5. Técnicas agropecuarias</h2>
+
+<h3 id="regla3">5.1 Regla de 3 Agropecuaria</h3>
+<p>Problemas de <strong>regla de tres directa</strong> ($a_1/b_1 = a_2/x$): a mayor cantidad, mayor resultado. Hay seis contextos: <strong>Vacunación</strong>, <strong>Concentrado</strong>, <strong>Ivermectina</strong>, <strong>Semillas de Pasto</strong>, <strong>Fertilizante</strong> y <strong>Agua de Riego</strong>. Arriba están los videos del tema.</p>
+<ol class="pasos">
+    <li>Elija un contexto. Aparece el enunciado, la indicación «DIRECTA» con la razón (por ejemplo «más reses → más dosis → más dinero») y una tabla con los datos y la incógnita <strong>x</strong> resaltada.</li>
+    <li>Calcule $x$ multiplicando en cruz y dividiendo, y escriba el resultado con el teclado.</li>
+    <li>Pulse <strong>✓ Verificar</strong>. Si lo necesita, <strong>Ver Ayuda / Proceso</strong> muestra el planteamiento y la operación.</li>
+</ol>
+<figure>
+    <img src="img/regla3.jpg" alt="Regla de 3 Agropecuaria">
+    <figcaption>Figura 2. Vacunación: a 165 pesos por dosis, vacunar 55 reses cuesta $x = 55 \times 165 = 9\,075$ pesos.</figcaption>
+</figure>
+
+<h3 id="algebra" class="nueva-pagina">5.2 Álgebra y Finca</h3>
+<p>Problemas que llevan a una <strong>ecuación cuadrática</strong> $x^2 + bx + c = 0$ con soluciones enteras: <strong>Corral / Cerca</strong>, <strong>Parcela de Cultivo</strong>, <strong>Estanque de Peces</strong>, <strong>Invernadero</strong> y <strong>Filas de Siembra</strong>.</p>
+<ol class="pasos">
+    <li>Elija un caso. El recuadro verde <strong>Planteamiento</strong> define la incógnita, escribe la ecuación y la lleva a la forma estándar.</li>
+    <li>Con los botones <strong>x₁ (menor)</strong> y <strong>x₂ (mayor)</strong> elija qué solución va a escribir; la casilla activa se resalta en amarillo.</li>
+    <li>Escriba cada solución y pulse <strong>✓ Verificar</strong>.</li>
+</ol>
+<figure>
+    <img src="img/algebra.jpg" alt="Álgebra y Finca">
+    <figcaption>Figura 3. Corral con 56 m de malla y 192 m² de área: $x(28 - x) = 192$, es decir $x^2 - 28x + 192 = 0$, con soluciones $x_1 = 12$ y $x_2 = 16$ (el corral mide 12 m × 16 m).</figcaption>
+</figure>
+
+<h3 id="geometria" class="nueva-pagina">5.3 Conceptos Geométricos</h3>
+<p>Ejercicios de <strong>perímetro, área y volumen</strong> con situaciones del campo. Arriba están los videos del tema y debajo nueve ejercicios en tres grupos:</p>
+<table>
+    <tr><th>Grupo</th><th>Ejercicio</th><th>Qué se calcula</th><th>Fórmula</th></tr>
+    <tr><td rowspan="3">Perímetros</td><td>Cerca de potrero</td><td>Metros de alambre para una hilera</td><td>$P = 2(l + a)$</td></tr>
+    <tr><td>Cerca de varias hileras</td><td>Alambre total con $n$ hileras</td><td>$P \cdot n$</td></tr>
+    <tr><td>Postes de una cerca</td><td>Postes, uno cada $d$ metros, en una cerca cerrada</td><td>$P / d$</td></tr>
+    <tr><td rowspan="4">Áreas</td><td>Lote rectangular</td><td>Área en m²</td><td>$A = l \cdot a$</td></tr>
+    <tr><td>Lote triangular</td><td>Área de una esquina en triángulo rectángulo</td><td>$A = \dfrac{b \cdot h}{2}$</td></tr>
+    <tr><td>Área en hectáreas</td><td>Área de una parcela en ha (respuesta con decimales)</td><td>$\text{ha} = \dfrac{l \cdot a}{10\,000}$</td></tr>
+    <tr><td>Semilla por área</td><td>Kilogramos de semilla según la dosis por cada 100 m²</td><td>$\dfrac{A}{100} \cdot \text{dosis}$</td></tr>
+    <tr><td rowspan="2">Volúmenes</td><td>Tanque de agua</td><td>Litros de un tanque en metros (1 m³ = 1.000 L)</td><td>$V = l \cdot a \cdot h$</td></tr>
+    <tr><td>Bebedero</td><td>Litros de un bebedero en decímetros (1 dm³ = 1 L)</td><td>$V = l \cdot a \cdot h$</td></tr>
+</table>
+<ol class="pasos">
+    <li>Elija un ejercicio. Aparece el enunciado, un <strong>dibujo</strong> de la figura con sus medidas y la fórmula.</li>
+    <li>Escriba el resultado con el teclado numérico. En «Área en hectáreas» use la tecla <strong>,</strong> para los decimales (por ejemplo <code>1,75</code>).</li>
+    <li>Pulse <strong>✓ Verificar</strong>. Si la respuesta es incorrecta, la casilla se pone roja y aparece una pista; al cambiar la respuesta, el aviso desaparece.</li>
+    <li><strong>📖 Ver Ayuda / Proceso</strong> muestra la fórmula, la sustitución y el resultado. Al acertar aparece «¡Correcto! ✓», el proceso y una conclusión, con el botón <strong>Nuevo ejercicio</strong>. «Otro ejercicio de este tipo →» cambia los datos sin responder.</li>
+</ol>
+<p>Los accesos rápidos <strong>Perímetros</strong>, <strong>Áreas de Terreno</strong> y <strong>Volúmenes</strong> de la tarjeta del Inicio abren directamente un ejercicio al azar de ese grupo.</p>
+<figure>
+    <img style="max-height:95mm" src="img/geometria_cat.jpg" alt="Conceptos Geométricos">
+    <figcaption>Figura 4. Pestaña «Conceptos Geométricos»: videos y los nueve ejercicios agrupados en perímetros, áreas y volúmenes.</figcaption>
+</figure>
+<figure>
+    <img style="max-height:115mm" src="img/geometria_ej.jpg" alt="Ejercicio del tanque de agua">
+    <figcaption>Figura 5. Tanque de 5 m × 3 m × 1 m: $V = 5 \cdot 3 \cdot 1 = 15$ m³, es decir $15 \cdot 1\,000 = 15\,000$ litros (con la ayuda abierta).</figcaption>
+</figure>
+
+<h3 id="despeje" class="nueva-pagina">5.4 Despeje de Variables</h3>
+<p>Ejercicios para <strong>despejar una letra</strong> de una fórmula del campo o de las ciencias y <strong>calcular su valor</strong>. Arriba están los dos videos del tema («Despeje de variables», partes 1 y 2) y debajo once ejercicios en tres niveles:</p>
+<table>
+    <tr><th>Nivel</th><th>Ejercicio</th><th>Fórmula</th><th>Se despeja</th></tr>
+    <tr><td rowspan="5">1. Una operación</td><td>Peso por dosis</td><td>$D = \dfrac{P}{k}$</td><td>$P = k\,D$</td></tr>
+    <tr><td>Largo del lote</td><td>$A = l \cdot a$</td><td>$l = \dfrac{A}{a}$</td></tr>
+    <tr><td>Tiempo de riego</td><td>$Q = \dfrac{V}{t}$</td><td>$t = \dfrac{V}{Q}$</td></tr>
+    <tr><td>Producto en la mezcla</td><td>$c = \dfrac{m}{V}$</td><td>$m = c \cdot V$</td></tr>
+    <tr><td>Tiempo del tractor</td><td>$d = v \cdot t$</td><td>$t = \dfrac{d}{v}$</td></tr>
+    <tr><td rowspan="4">2. Dos operaciones</td><td>Animales vacunados</td><td>$C = p\,n + F$</td><td>$n = \dfrac{C - F}{p}$</td></tr>
+    <tr><td>Ganancia de peso</td><td>$P_f = P_i + g\,t$</td><td>$g = \dfrac{P_f - P_i}{t}$</td></tr>
+    <tr><td>Temperatura del bovino</td><td>$F = 1{,}8\,C + 32$</td><td>$C = \dfrac{F - 32}{1{,}8}$</td></tr>
+    <tr><td>Lado del potrero</td><td>$P = 2(l + a)$</td><td>$l = \dfrac{P}{2} - a$</td></tr>
+    <tr><td rowspan="2">3. Varios factores</td><td>Altura del tanque</td><td>$V = l \cdot a \cdot h$</td><td>$h = \dfrac{V}{l \cdot a}$</td></tr>
+    <tr><td>Largo del lote sembrado</td><td>$N = \rho \cdot l \cdot a$</td><td>$l = \dfrac{N}{\rho \cdot a}$</td></tr>
+</table>
+<figure>
+    <img style="max-height:105mm" src="img/despeje_cat.jpg" alt="Despeje de Variables">
+    <figcaption>Figura 6. Pestaña «Despeje de Variables»: los videos y los ejercicios agrupados por nivel.</figcaption>
+</figure>
+<ol class="pasos">
+    <li>Elija un ejercicio. Aparecen el enunciado, la fórmula y el significado de cada letra.</li>
+    <li><strong>Paso 1.</strong> Toque la fórmula bien despejada entre las cuatro opciones. Las otras tres son errores frecuentes (sumar lo que había que restar, invertir la fracción, dividir solo una parte); si elige una de ellas, se marca en rojo y una pista explica el error. Puede elegir otra.</li>
+    <li><strong>Paso 2.</strong> Cuando acierta el despeje, aparece el teclado: escriba el valor con los datos del enunciado (la tecla «,» aparece solo cuando la respuesta tiene decimales, como 1,5 m o 38,5 °C) y pulse <strong>✓ Verificar</strong>.</li>
+    <li><strong>📖 Ver Ayuda / Proceso</strong> muestra el despeje haciendo la misma operación a ambos lados de la igualdad. Al acertar se ven la conclusión y la <strong>comprobación</strong> con los datos originales.</li>
+</ol>
+<p>Los accesos rápidos del Inicio abren un ejercicio al azar: <strong>Fórmulas Físicas</strong> (dosis, riego, mezcla, tractor, temperatura) y <strong>Fórmulas de Área</strong> (lote, potrero, tanque, siembra).</p>
+<figure>
+    <img style="max-height:80mm" src="img/despeje_ej.jpg" alt="Opción equivocada en el paso 1">
+    <figcaption>Figura 7. Paso 1 con una opción equivocada: $\dfrac{C+F}{p}$ suma F, que en la fórmula está sumando y debe pasar restando.</figcaption>
+</figure>
+<figure>
+    <img style="max-height:110mm" src="img/despeje_ok.jpg" alt="Ejercicio de despeje resuelto">
+    <figcaption>Figura 8. Ejercicio resuelto: $17\,000 = 1\,200\,n + 5\,000$, se resta $5\,000$ y se divide entre $1\,200$: $n = 10$ animales; comprobación $1\,200 \cdot 10 + 5\,000 = 17\,000$.</figcaption>
+</figure>
+
+<h3 id="estudio" class="nueva-pagina">5.5 Razonamiento Deductivo</h3>
+<p>Arriba están los dos videos del tema («Problema lógico Uno – Tecnología Agropecuaria» y «Problema lógico de las profesiones»), que enseñan la <strong>tabla matricial</strong>. Debajo hay dos grupos de ejercicios:</p>
+<table>
+    <tr><th>Grupo</th><th>Ejercicio</th><th>Qué se hace</th></tr>
+    <tr><td rowspan="3">Tablas lógicas</td><td>Tabla básica</td><td>3 productores y su cultivo (9 casillas).</td></tr>
+    <tr><td>Tabla intermedia</td><td>3 productores, cultivo y animal (27 casillas).</td></tr>
+    <tr><td>Tabla avanzada</td><td>4 productores, finca, cultivo y animal (96 casillas).</td></tr>
+    <tr><td rowspan="3">Deducción</td><td>Silogismos</td><td>«Todos los bovinos son rumiantes. Lucero es un bovino.» ¿Qué se concluye?</td></tr>
+    <tr><td>Si…, entonces…</td><td>Una regla con condición y un hecho: modus ponens, modus tollens y dos falacias frecuentes.</td></tr>
+    <tr><td>Variado</td><td>Cualquiera de los anteriores.</td></tr>
+</table>
+<figure>
+    <img style="max-height:70mm" src="img/razonamiento_cat.jpg" alt="Razonamiento Deductivo">
+    <figcaption>Figura 9. Pestaña «Razonamiento Deductivo»: los videos, las tablas lógicas y la deducción.</figcaption>
+</figure>
+
+<h4>Tablas lógicas</h4>
+<ol class="pasos">
+    <li>Lea las pistas numeradas. Cada productor tiene exactamente una opción de cada categoría y no hay dos productores con la misma.</li>
+    <li>Toque una casilla para marcar <strong>✗</strong> (no va); otra vez para <strong>✓</strong> (sí va); otra vez para borrarla. Los bloques de abajo cruzan las categorías entre sí (por ejemplo, animal con cultivo), como en el video.</li>
+    <li>La casilla «Al marcar ✓, completar con ✗…» pone ✗ en el resto de la fila y la columna del bloque cada vez que marca un ✓.</li>
+    <li><strong>💡 Pista</strong> propone una deducción segura y resalta la casilla en amarillo (por ejemplo: «Por la pista 2…», «Por descarte…» o «Ana va con maíz, y maíz va con gallinas…»). Si alguna marca está mal, la pista lo señala primero.</li>
+    <li><strong>✓ Verificar</strong> dice cuántas parejas ✓ están bien, sin decir cuáles. Al terminar se muestra quién tiene qué. <strong>📖 Ver Ayuda / Proceso</strong> explica cómo se deduce cada ✓.</li>
+</ol>
+<p>Las tablas se crean al azar, y la aplicación comprueba que la solución sea única y que se pueda deducir paso a paso, sin necesidad de probar casos.</p>
+<figure>
+    <img style="max-height:52mm" src="img/razonamiento_tabla.jpg" alt="Tabla lógica intermedia">
+    <figcaption>Figura 10. Tabla intermedia a medio resolver: como Ana y Darío ya tienen ✗ en yuca, la pista indica marcar ✓ en Gloria – yuca.</figcaption>
+</figure>
+
+<h4>Deducción</h4>
+<ol class="pasos">
+    <li>Lea las dos premisas y suponga que son verdaderas.</li>
+    <li>Toque la conclusión que se sigue <strong>con certeza</strong>. A veces la respuesta correcta es «No se puede concluir nada con certeza».</li>
+    <li>La aplicación marca la respuesta correcta en verde, explica por qué (con el nombre de la regla) y, en las falacias, da otra causa posible de la consecuencia.</li>
+</ol>
+<figure>
+    <img style="max-height:46mm" src="img/razonamiento_deduccion.jpg" alt="Ejercicio de deducción">
+    <figcaption>Figura 11. Modus tollens: el potrero no se mantuvo verde, así que este verano no se regó. «La Loma se mantiene verde» contradice el hecho dado.</figcaption>
+</figure>
+<table style="break-inside:auto">
+    <tr><th>Forma</th><th>Ejemplo</th><th>Conclusión</th></tr>
+    <tr><td>Modus ponens</td><td>Si llueven más de 50 mm, se suspende la fumigación. Hoy llovieron 70 mm.</td><td>Hoy se suspende la fumigación.</td></tr>
+    <tr><td>Modus tollens</td><td>Si una vaca tiene fiebre, su temperatura pasa de 39,5 °C. Lucero tiene 38,6 °C.</td><td>Lucero no tiene fiebre.</td></tr>
+    <tr><td>Afirmar el consecuente (falacia)</td><td>Si el lote tiene gusano cogollero, las hojas tienen perforaciones. Las hojas tienen perforaciones.</td><td>No se puede concluir: pueden ser de granizo o de otros insectos.</td></tr>
+    <tr><td>Negar el antecedente (falacia)</td><td>Si la leche está ácida, no pasa la prueba de alcohol. La leche no está ácida.</td><td>No se puede concluir: puede fallar por mastitis o calostro.</td></tr>
+</table>
+
+<!-- ================= 6 ================= -->
+<h2 id="aritmetica">6. Aritmética y álgebra</h2>
+
+<h3 id="sumas">6.1 Sumas (enteros y decimales)</h3>
+<p>Suma vertical en columnas con <strong>acarreo</strong>. Hay sumas de 2 a 5 cifras, de 3 a 7 sumandos y con decimales (por ejemplo «Suma 2+1 Dec.»: dos cifras enteras y una decimal).</p>
+<ol class="pasos">
+    <li>Elija el tipo y pulse <strong>Practicar</strong>.</li>
+    <li>Empiece por la columna de la derecha: el texto indica la suma de esa columna (por ejemplo «Columna 1 de 4: 3 + 8 = ?»).</li>
+    <li>Escriba la cifra de las unidades del resultado; lo que se lleva aparece en verde encima de la columna siguiente.</li>
+    <li>Siga columna por columna hacia la izquierda hasta completar el resultado.</li>
+</ol>
+<figure>
+    <img src="img/sumas.jpg" alt="Sumas">
+    <figcaption>Figura 12. Suma de 3 cifras: $953 + 688 = 1\,641$; las cifras verdes de arriba son los acarreos.</figcaption>
+</figure>
+
+<h3 id="restas" class="nueva-pagina">6.2 Restas y verificación</h3>
+<p>Resta vertical con <strong>préstamo</strong>: 2 y 3 cifras, 3 − 2 y 4 − 3 cifras, con 1 o 2 decimales y entero menos decimal. Se resuelve columna por columna desde la derecha, igual que la suma.</p>
+<p>Al terminar, la aplicación pide la <strong>verificación</strong>: sumar el resultado y el sustraendo para comprobar que da el minuendo («Verificación: resultado + sustraendo = minuendo»).</p>
+<figure>
+    <img src="img/restas.jpg" alt="Restas">
+    <figcaption>Figura 13. Resta de 3 cifras: $759 - 605 = 154$, y su verificación $154 + 605 = 759$.</figcaption>
+</figure>
+
+<h3 id="mults" class="nueva-pagina">6.3 Multiplicación paso a paso</h3>
+<p>Multiplicación por una cifra (2, 3 y 4 cifras) y por varias cifras (2×2 hasta 6×5). En las de varias cifras se calcula cada <strong>producto parcial</strong> («Parcial 1 de 2») y al final se suman los parciales.</p>
+<figure>
+    <img src="img/mults.jpg" alt="Multiplicación">
+    <figcaption>Figura 14. Multiplicación 3×2 cifras: $861 \times 20 = 17\,220$, calculada con dos productos parciales.</figcaption>
+</figure>
+
+<h3 id="divs" class="nueva-pagina">6.4 Divisiones y decimales</h3>
+<p>División en galera, cifra por cifra del cociente («Dígito 1 de 2 del cociente»). A la derecha aparece la <strong>tabla de multiplicar del divisor</strong> como ayuda, con la fila útil resaltada.</p>
+<ul>
+    <li><strong>Divisiones exactas</strong>: Div 2÷1 hasta Div 6÷4 (cifras del dividendo ÷ cifras del divisor).</li>
+    <li><strong>Otras divisiones</strong>, al pie de la pestaña: <strong>Con decimales</strong> (el dividendo es entero y el cociente tiene cifras decimales, por ejemplo $918 \div 4 = 229{,}5$) y <strong>Con residuo</strong> (además del cociente se escribe el residuo). Cada una abre su propia lista de ejercicios; «← Volver a Divisiones» regresa.</li>
+</ul>
+<figure>
+    <img src="img/divs.jpg" alt="Divisiones">
+    <figcaption>Figura 15. División $624 \div 8 = 78$: la tabla del 8 resalta $7 \times 8 = 56$, la cifra que cabe en 62.</figcaption>
+</figure>
+
+<h3 id="fracciones" class="nueva-pagina">6.5 Fracciones y potencias</h3>
+<p>Siete tipos de ejercicio: <strong>Suma</strong>, <strong>Resta</strong>, <strong>Multiplicación</strong>, <strong>División</strong>, <strong>Potenciación</strong>, <strong>Operaciones mixtas</strong> y <strong>Operaciones mixtas con potencias</strong>.</p>
+<ol class="pasos">
+    <li>Escriba primero el <strong>numerador</strong> del resultado y pulse <strong>✓ Numerador</strong>; luego el <strong>denominador</strong>.</li>
+    <li>La aplicación acepta fracciones equivalentes: si escribe una fracción sin simplificar, la compara ya simplificada.</li>
+    <li><strong>Ver Ayuda / Proceso</strong> muestra el común denominador y las operaciones; en las operaciones mixtas, el ejercicio se resuelve por pasos.</li>
+</ol>
+<figure>
+    <img src="img/fracciones.jpg" alt="Fracciones">
+    <figcaption>Figura 16. Suma de fracciones: $\tfrac{1}{6} + \tfrac{1}{4} = \tfrac{2}{12} + \tfrac{3}{12} = \tfrac{5}{12}$.</figcaption>
+</figure>
+
+<h3 id="factorizacion" class="nueva-pagina">6.6 Factorización de trinomios</h3>
+<p>Factorización de $x^2 + bx + c$ con raíces enteras, usando el <strong>método de Po-Shen Loh</strong>. Hay cuatro niveles: raíces positivas, signos mixtos, raíces negativas y variado.</p>
+<ol class="pasos">
+    <li>Escriba la primera raíz $x_1$ (la menor) y luego la segunda $x_2$. Use <strong>±</strong> para las raíces negativas.</li>
+    <li>El recuadro «Forma factorizada» muestra $(x\ ?)(x\ ?)$: los signos de interrogación son las partes que faltan por hallar.</li>
+    <li>«▼ Ayuda — Método Po-Shen Loh» explica el método: las raíces suman $-b$, así que son $\tfrac{-b}{2} \pm u$, y su producto da $c$, de donde se despeja $u$.</li>
+    <li>Si la raíz es incorrecta, la pista recuerda que se buscan dos números que multiplicados den $c$ y sumados den $b$ (con su signo); las raíces son esos números cambiados de signo.</li>
+</ol>
+<figure>
+    <img src="img/factorizacion.jpg" alt="Factorización">
+    <figcaption>Figura 17. $x^2 - 6x + 8$: las raíces suman 6 (media 3) y multiplican 8, así que $9 - u^2 = 8$, $u = 1$; raíces 2 y 4, y $x^2 - 6x + 8 = (x - 2)(x - 4)$.</figcaption>
+</figure>
+
+<h3 id="expr" class="nueva-pagina">6.7 Signos de agrupación</h3>
+<p>Expresiones con <strong>paréntesis</strong>, <strong>corchetes</strong> y <strong>llaves</strong>, y con <strong>signos</strong> (números negativos), solos o combinados con los signos de agrupación. Se resuelve primero lo de adentro hacia afuera y respetando el orden de las operaciones.</p>
+<ol class="pasos">
+    <li>Elija el tipo: se abre el ejercicio. «Salir» regresa a la lista de tipos.</li>
+    <li>Escriba el resultado en la casilla <strong>Respuesta</strong> y pulse <strong>Verificar</strong>. Solo se acepta el número exacto (por ejemplo, 11,5 no cuenta como 11).</li>
+    <li>Después de verificar se muestra el proceso (por ejemplo «Proceso: 4 + 7 = 11 | 11 × 1 = 11»).</li>
+</ol>
+<figure>
+    <img src="img/expr.jpg" alt="Signos de agrupación">
+    <figcaption>Figura 18. Ejercicio «Con Paréntesis» ya verificado: $(4 + 7) \times 1 = 11$, con el proceso debajo.</figcaption>
+</figure>
+
+<h3 id="probs" class="nueva-pagina">6.8 Problemas aritméticos</h3>
+<p>Arriba están los cuatro videos del <strong>método de G. Pólya</strong> (entender el problema, hacer un plan, ejecutarlo y revisar). Debajo hay tres grupos de problemas:</p>
+<table>
+    <tr><th>Grupo</th><th>Problemas</th><th>Cómo se responde</th></tr>
+    <tr><td>Problemas del campo</td><td>Tienda, Finca, Ganado y Engorde.</td><td>Un número en la casilla «Su respuesta» y <strong>Verificar</strong>; <strong>Nuevo Problema</strong> cambia el enunciado.</td></tr>
+    <tr><td>Problemas interactivos</td><td>Sumas, multiplicación, división, sumas múltiples y conversiones.</td><td>Paso a paso con el teclado numérico, como en las secciones 6.1 a 6.4.</td></tr>
+    <tr><td>Problemas con fracciones</td><td>Pizza y pasteles, escuela y libros, jardín y naturaleza, tiempo y caminos.</td><td>Numerador y denominador, como en la sección 6.5.</td></tr>
+</table>
+<figure>
+    <img style="max-height:55mm" src="img/probs_ej.jpg" alt="Problema de la finca">
+    <figcaption>Figura 19. Problema de la finca: de tres cerdos de 80, 95 y 105 kg se vende el más pesado a 2 pesos por kilo, así que se obtienen $105 \times 2 = 210$ pesos.</figcaption>
+</figure>
+<figure>
+    <img style="max-height:92mm" src="img/probs.jpg" alt="Problemas aritméticos">
+    <figcaption>Figura 20. Pestaña «Problemas Aritméticos»: videos del método de Pólya y los tres grupos de problemas.</figcaption>
+</figure>
+
+<!-- ================= 7 ================= -->
+<h2 id="curriculo">7. Currículo y recursos</h2>
+
+<h3 id="pdf">7.1 Módulos oficiales (PDF)</h3>
+<p>Las siete guías de práctica del curso: (1) conceptos básicos de matemática, (2) importancia de los números, (3) regla de tres y proporcionalidad, (4) fraccionarios y decimales, (5) potenciación y proporciones, (6) ecuaciones matemáticas básicas y (7) conversión de unidades. Cada guía tiene tres botones:</p>
+<ul>
+    <li><strong>👁️ Ver en Visor</strong>: la abre en una ventana dentro de la página.</li>
+    <li><strong>↗ Ventana</strong>: la abre en una ventana emergente aparte.</li>
+    <li><strong>⬇ Descargar</strong>: guarda el PDF en el equipo.</li>
+</ul>
+<p>El menú <strong>Módulos PDF ▾</strong> del encabezado abre cualquiera de las guías en el visor desde cualquier pestaña.</p>
+<figure>
+    <img src="img/pdf.jpg" alt="Módulos oficiales en PDF">
+    <figcaption>Figura 21. Pestaña «Módulos Oficiales (PDF)»: las siete guías con sus botones de visor, ventana y descarga.</figcaption>
+</figure>
+
+<h3 id="videos" class="nueva-pagina">7.2 Aprendo con videos</h3>
+<p>Reúne <strong>46 videos</strong> del canal de YouTube del profesor John Jairo Estrada, del equipo de la Caja de Herramientas, ordenados en 17 temas. A la izquierda de cada tema está qué se aprende y el botón <strong>Ver en la aplicación</strong>, que abre la herramienta donde se practica; a la derecha, los videos. El botón <strong>Ver el canal completo</strong> abre el canal.</p>
+<table>
+    <tr><th>Tema</th><th>Abre</th><th>Videos</th></tr>
+    <tr><td>Presentación del curso y de la aplicación</td><td>Introducción a la Caja</td><td>2</td></tr>
+    <tr><td>Los siete módulos del curso</td><td>Módulos Oficiales (PDF)</td><td>7</td></tr>
+    <tr><td>Guías: cómo iniciar cada módulo</td><td>Módulos Oficiales (PDF)</td><td>7</td></tr>
+    <tr><td>Regla de tres (directa, inversa y compuesta)</td><td>Regla de 3 Agropecuaria</td><td>4</td></tr>
+    <tr><td>Ecuaciones cuadráticas en la finca</td><td>Álgebra y Finca</td><td>1</td></tr>
+    <tr><td>Conceptos geométricos</td><td>Conceptos Geométricos</td><td>3</td></tr>
+    <tr><td>Despeje de variables</td><td>Despeje de Variables</td><td>2</td></tr>
+    <tr><td>Razonamiento deductivo</td><td>Razonamiento Deductivo</td><td>2</td></tr>
+    <tr><td>Sumas y restas verticales</td><td>Sumas / Restas</td><td>2 + 1</td></tr>
+    <tr><td>Multiplicación y división</td><td>Multiplicación / Divisiones</td><td>1 + 2</td></tr>
+    <tr><td>Fracciones y potencias</td><td>Fracciones y Potencias</td><td>3</td></tr>
+    <tr><td>Factorización de trinomios</td><td>Factorización de Trinomios</td><td>2</td></tr>
+    <tr><td>Signos de agrupación y orden de operaciones</td><td>Signos de Agrupación</td><td>2</td></tr>
+    <tr><td>Planteo de problemas con el método de Pólya</td><td>Problemas Aritméticos</td><td>4</td></tr>
+    <tr><td>Conversión de unidades</td><td>(tema de apoyo)</td><td>1</td></tr>
+</table>
+<p class="nota">Los videos se abren en una pestaña nueva del navegador y necesitan conexión a internet. Las herramientas también muestran, arriba, las tarjetas de sus propios videos.</p>
+<figure>
+    <img style="max-height:95mm" src="img/videos.jpg" alt="Aprendo con videos">
+    <figcaption>Figura 22. Pestaña «Aprendo con videos»: cada tema con su botón «Ver en la aplicación» y sus videos.</figcaption>
+</figure>
+
+<h3 id="evaluaciones">7.3 Evaluaciones en línea</h3>
+<p>Una evaluación por módulo (del 1 al 7). Cada tarjeta abre la evaluación en una pestaña nueva del navegador; se necesita conexión a internet.</p>
+<figure>
+    <img src="img/evaluaciones.jpg" alt="Evaluaciones en línea">
+    <figcaption>Figura 23. Pestaña «Evaluaciones en Línea» con las siete evaluaciones.</figcaption>
+</figure>
+
+<h3 id="geogebra">7.4 GeoGebra clásico y guía rápida</h3>
+<p>La pestaña carga <strong>GeoGebra Clásico</strong> dentro de la página (necesita internet) y tiene el botón <strong>Abrir en Pantalla Completa ↗</strong> para usarlo en una pestaña aparte. Debajo hay comandos rápidos útiles para el sector agropecuario.</p>
+<figure>
+    <img src="img/geogebra.jpg" alt="GeoGebra clásico">
+    <figcaption>Figura 24. Pestaña «GeoGebra Clásico»: la ventana de GeoGebra se carga en el recuadro y debajo están los comandos rápidos.</figcaption>
+</figure>
+<p><strong>Guía rápida.</strong> En GeoGebra los comandos se escriben en la <strong>barra de entrada</strong> (a la izquierda, «Entrada…») y se confirman con Enter; el resultado aparece en la vista algebraica y, si es un objeto, en la vista gráfica.</p>
+<div class="consejo">
+    <p>Use GeoGebra para <strong>comprobar</strong> los ejercicios después de resolverlos a mano, no para reemplazar el procedimiento. En GeoGebra el punto decimal se escribe con punto (<code>2.5</code>).</p>
+</div>
+<table>
+    <tr><th>Para…</th><th>Comando</th><th>Ejemplo y resultado</th></tr>
+    <tr><td>Resolver la ecuación de un corral o parcela</td><td><code>Resuelve(ecuación)</code></td><td><code>Resuelve(x^2 - 28x + 192 = 0)</code> → $\{x = 12, x = 16\}$</td></tr>
+    <tr><td>Factorizar un trinomio</td><td><code>Factoriza(expresión)</code></td><td><code>Factoriza(x^2 - 6x + 8)</code> → $(x - 4)(x - 2)$</td></tr>
+    <tr><td>Dibujar un terreno y ver su área</td><td><code>Polígono(puntos)</code></td><td><code>Polígono((0,0), (20,0), (20,15), (0,15))</code> → área 300</td></tr>
+    <tr><td>Medir una cerca entre dos postes</td><td><code>Distancia(A, B)</code></td><td><code>Distancia((0,0), (20,15))</code> → 25</td></tr>
+    <tr><td>Perímetro de un terreno</td><td><code>Perímetro(polígono)</code></td><td>con el polígono anterior → 70</td></tr>
+    <tr><td>Modelar un costo</td><td><code>f(x) = …</code></td><td><code>f(x) = 2.5x + 10</code>; luego <code>f(40)</code> → 110</td></tr>
+    <tr><td>Simplificar una fracción</td><td><code>Simplifica(expresión)</code></td><td><code>Simplifica(1/6 + 1/4)</code> → $\tfrac{5}{12}$ (en la vista CAS)</td></tr>
+</table>
+
+<h3 id="manual" class="nueva-pagina">7.5 La pestaña «Manual de usuario»</h3>
+<p>Este manual está dentro de la aplicación, en la última pestaña de la barra lateral (también tiene tarjeta en el Inicio y en la Introducción). Allí puede:</p>
+<ul>
+    <li><strong>Leerlo en el visor</strong> incrustado en la página.</li>
+    <li><strong>↗ Ver en ventana emergente</strong>: lo abre en una ventana aparte para consultarlo mientras trabaja. Si el navegador bloquea la ventana, un aviso amarillo dentro de la página indica cómo permitirla.</li>
+    <li><strong>⬇ Descargar PDF</strong>: guarda una copia en su equipo.</li>
+</ul>
+<figure>
+    <img src="img/manual.jpg" alt="Pestaña Manual de usuario">
+    <figcaption>Figura 25. Pestaña «Manual de usuario» con sus botones y el visor del PDF.</figcaption>
+</figure>
+
+<!-- ================= 8 ================= -->
+<h2 id="problemas">8. Solución de problemas</h2>
+<table>
+    <tr><th>Situación</th><th>Causa y solución</th></tr>
+    <tr><td>Las fórmulas se ven como texto con signos <code>\frac</code> o <code>^</code></td><td>KaTeX no cargó: revise la conexión a internet y recargue la página.</td></tr>
+    <tr><td>Un video, una evaluación o GeoGebra no abren</td><td>Necesitan internet y se abren en una pestaña nueva; revise el bloqueador de ventanas emergentes.</td></tr>
+    <tr><td>El PDF de un módulo o el manual no se ven en el visor</td><td>Algunos navegadores no muestran PDF dentro de la página cuando se abre <code>index.html</code> directamente. Use «Ventana» o «Descargar», o abra la aplicación con <code>./iniciar.sh</code> (sección 2).</td></tr>
+    <tr><td>«El navegador bloqueó la ventana emergente»</td><td>Permita las ventanas emergentes para esta página (ícono en la barra de direcciones) o use «Descargar PDF».</td></tr>
+    <tr><td>La casilla resaltada no avanza</td><td>La cifra no es correcta. Revise la operación de esa columna (y lo que se lleva o se presta) o pulse «Ver Ayuda / Proceso».</td></tr>
+    <tr><td>Quiero otro ejercicio del mismo tipo</td><td>Pulse <strong>Nuevo</strong> (o <strong>Nuevo Problema</strong>). <strong>Reintentar</strong> solo borra lo escrito.</td></tr>
+    <tr><td>No encuentro las divisiones con decimales o con residuo</td><td>Están al pie de la pestaña «Divisiones y Decimales», en «Otras divisiones», y en los accesos rápidos de la tarjeta de Divisiones del Inicio.</td></tr>
+</table>
+
+</body>
+</html>
